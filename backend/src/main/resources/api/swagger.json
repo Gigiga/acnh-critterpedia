@@ -1,0 +1,367 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "REST interface to query Animal Crossing New Horizons creatures and fossils",
+    "version": "0.1.0",
+    "title": "ACNH Critterpedia",
+    "contact": {
+      "name": "treineke",
+      "url": "https://github.com/Gigiga/acnh-critterpedia"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "tags": [
+    {
+      "name": "Fish",
+      "description": "Information about fishes"
+    },
+    {
+      "name": "Bug",
+      "description": "Information about bugs"
+    },
+    {
+      "name": "Fossil",
+      "description": "Information about fossils"
+    }
+  ],
+  "paths": {
+    "/fish": {
+      "get": {
+        "tags": [
+          "Fish"
+        ],
+        "description": "Fetch all fishes ```Example: http://192.168.99.101:4041/fish```",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully fetched all fishes",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/fish"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fish/{name}": {
+      "get": {
+        "tags": [
+          "Fish"
+        ],
+        "description": "Fetch fish with passed name ```Example: http://192.168.99.101:4041/fish/bass```",
+        "produces": [
+          "application/json",
+          "text/html"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "type": "string",
+            "description": "Name of the fish"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully fetched a fish",
+            "schema": {
+              "$ref": "#/definitions/fish"
+            }
+          },
+          "404": {
+            "description": "The fish was not found"
+          }
+        }
+      }
+    },
+    "/bug": {
+      "get": {
+        "tags": [
+          "Bug"
+        ],
+        "description": "Fetch all bugs ```Example: http://192.168.99.101:4041/bug```",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully fetched all bugs",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/bug"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bug/{name}": {
+      "get": {
+        "tags": [
+          "Bug"
+        ],
+        "description": "Fetch bug with passed name ```Example: http://192.168.99.101:4041/bug/tarantula```",
+        "produces": [
+          "application/json",
+          "text/html"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "type": "string",
+            "description": "Name of the bug"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully fetched a bug",
+            "schema": {
+              "$ref": "#/definitions/bug"
+            }
+          },
+          "404": {
+            "description": "The bug was not found"
+          }
+        }
+      }
+    },
+    "/fossil": {
+      "get": {
+        "tags": [
+          "Fossil"
+        ],
+        "description": "Fetch all fossils ```Example: http://192.168.99.101:4041/fossil```",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully fetched all fossils",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/fossil"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fossil/{name}": {
+      "get": {
+        "tags": [
+          "Fossil"
+        ],
+        "description": "Fetch fossil with passed name ```Example: http://192.168.99.101:4041/fossil/trilobite```",
+        "produces": [
+          "application/json",
+          "text/html"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "type": "string",
+            "description": "Name of the fossil"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully fetched a fossil",
+            "schema": {
+              "$ref": "#/definitions/fossil"
+            }
+          },
+          "404": {
+            "description": "The fossil was not found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "months": {
+      "type": "string",
+      "enum": [
+        "JAN",
+        "FEB",
+        "MAR",
+        "APR",
+        "MAY",
+        "JUN",
+        "JUL",
+        "AUG",
+        "SEP",
+        "OCT",
+        "NOV",
+        "DEC"
+      ]
+    },
+    "catchTime": {
+      "type": "object",
+      "description": "Availability time of the creature",
+      "properties": {
+        "startHour": {
+          "example": "12",
+          "description": "Availability start hour",
+          "type": "integer"
+        },
+        "endHour": {
+          "example": "16",
+          "description": "Availability end hour",
+          "type": "integer"
+        },
+        "northernHemisphereMonths": {
+          "description": "Availability months in northern hemisphere",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/months"
+          }
+        },
+        "southernHemisphereMonths": {
+          "description": "Availability months in southern hemisphere",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/months"
+          }
+        }
+      }
+    },
+    "fish": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "example": "Sea Bass",
+          "type": "string",
+          "description": "Name of the fish"
+        },
+        "image": {
+          "type": "string",
+          "format": "byte",
+          "description": "Image of the fish"
+        },
+        "price": {
+          "example": "400",
+          "type": "integer",
+          "description": "Selling price of the fish"
+        },
+        "locations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "RIVER",
+              "POND",
+              "RIVER_CLIFFTOP",
+              "RIVER_MOUTH",
+              "SEA",
+              "PIER",
+              "SEA_RAINING"
+            ]
+          }
+        },
+        "shadowSize": {
+          "type": "string",
+          "enum": [
+            "ONE",
+            "TWO",
+            "THREE",
+            "FOUR",
+            "FIVE",
+            "SIX",
+            "NARROW",
+            "FOUR_FIN",
+            "SIX_FIN"
+          ]
+        },
+        "catchTime": {
+          "$ref": "#/definitions/catchTime"
+        }
+      }
+    },
+    "bug": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "example": "Ladybug",
+          "type": "string",
+          "description": "Name of the bug"
+        },
+        "image": {
+          "type": "string",
+          "format": "byte",
+          "description": "Image of the bug"
+        },
+        "price": {
+          "example": "200",
+          "type": "integer",
+          "description": "Selling price of the bug"
+        },
+        "locations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "FLYING",
+              "FLYING_BY_HYBRID_FLOWERS",
+              "FLYING_BY_LIGHT",
+              "TREES",
+              "GROUND",
+              "WHITE_FLOWERS",
+              "SHAKING_TREES",
+              "UNDERGROUND",
+              "POND_AND_RIVERS",
+              "FLOWERS",
+              "TREESTUMPS",
+              "COCONUT_TREES",
+              "GROUND_ROLLING_SNOWBALLS",
+              "UNDER_TREES_DISGUISED_LEAFS",
+              "ROTTEN_FRUIT",
+              "BEACH",
+              "BEACH_ROCKS",
+              "TRASH",
+              "VILLAGERS_HATS",
+              "ROCKS_RAINING",
+              "HITTING_ROCKS"
+            ]
+          }
+        },
+        "catchTime": {
+          "$ref": "#/definitions/catchTime"
+        }
+      }
+    },
+    "fossil": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "example": "Acanthostega",
+          "type": "string",
+          "description": "Name of the fossil"
+        },
+        "image": {
+          "type": "string",
+          "format": "byte",
+          "description": "Image of the fossil"
+        },
+        "price": {
+          "example": "2000",
+          "type": "integer",
+          "description": "Selling price of the fossil"
+        }
+      }
+    }
+  }
+}
