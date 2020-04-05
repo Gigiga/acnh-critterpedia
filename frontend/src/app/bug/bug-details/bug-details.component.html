@@ -1,0 +1,11 @@
+<div class="bug-details">
+  <div *ngIf="bug$ | async as bug">
+    <mat-list>
+      <mat-list-item>{{ 'Name' | translate }}: {{ bug.name | translate }}</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>{{ 'Selling Price' | translate }}: {{ bug.price | number }}</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>{{ 'Location' | translate }}: {{'BUG_LOCATIONS.' + bug.location | translate}}</mat-list-item>
+    </mat-list>
+  </div>
+</div>

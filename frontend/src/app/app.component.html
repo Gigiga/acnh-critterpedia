@@ -1,0 +1,22 @@
+<nav mat-tab-nav-bar [backgroundColor]="'primary'">
+  <a mat-tab-link
+     [routerLink]="['/fish']"
+     routerLinkActive #rlaFish="routerLinkActive"
+     [active]="rlaFish.isActive">
+    {{'Fish' | translate}}
+  </a>
+  <a mat-tab-link
+     [routerLink]="['/bugs']"
+     routerLinkActive #rlaBugs="routerLinkActive"
+     [active]="rlaBugs.isActive">
+     {{'Bugs' | translate}}
+  </a>
+  <a mat-tab-link
+     [routerLink]="['/fossils']"
+     routerLinkActive #rlaFossils="routerLinkActive"
+     [active]="rlaFossils.isActive">
+     {{'Fossils' | translate}}
+  </a>
+</nav>
+
+<router-outlet></router-outlet>

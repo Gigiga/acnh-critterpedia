@@ -1,0 +1,17 @@
+{
+    "name": "Bitterling",
+    "image": "data:image/webp;base64,UklGRnYFAABXRUJQVlA4WAoAAAAQAAAAPwAAPwAAQUxQSIYBAAABkAMAtGk3J7Zt2zY2286c1LZt27a52bbtNrbfqXvPeWOWiJgA6COr7DNwRKiijAzHvenFlwnycT3chYh4yUouwRfwj92DZRJyHf9605qXglFI0cCBWUnX8O8dFZwUXEZfqm6XpNYG6R/wiDYf3cpHPSiwOpKN9YY2FDuRi/NxCQWfMeDhdBqF10SyMN2H4qVBHLSW9xLgRhU6paFtSHnVyc9dhSjzK5I2Xfv2caASSewzpH/hQKAafxcZVgcKU0ze+QE5vnUQZvsYeR7XFub2hUfvEBBu9ZrHGw9xxtd5rFAWp76TxwggTK5mcUSLQGVOL4cvPgRgc4ZDRxkFRLxggNNJoKiW5Oan39Ypk6iMbCFoyZ/Ui4iLFEhAc1KruCM6Vod68FsiEGtNahL1KRbAqnJ6ojIVqA+sFtM9Xgm4KiXckEQcMQHGTvO+/N/DAGCtGrXsWZv0W8enlt8+ZQB3FYfcCWu2rZ9R6j22CfFLuSK735XVlAFAo2z/zmQlkLOCpgb0XQVWUDggygMAANATAJ0BKkAAQAAAwBIliANKpwLlOOH5YceOmhgNsd5gP1s/WD3o+kP/YrrHvQA8tb9mfgz/dH0YrYA80+953d9osfR+Uf5Ac6+09/U94Ix1oSPHax4/7f7QPjB/2v6/53/pf/ee4V+pn+s4HBMkLiUbLtNctK+kQaGear3pxFxxf64M1soXCBpuEwzoH//k7U41/1G+Ft4sHvpjXSVBH4PFGrdzOzAAAP7+7qpH/4h5ShvcL+bykAIq36hQz1n64cDk+q9Rv+IcY4GTEWX+1H332vNULh/IRQXQFu9X/1PnRzdZBGWHTzfc6X61oc5tEMC81pI7P10XhFdHO1L4dPid6wLftS+fCePttWft1E2W0f/6PPlUnjOYPfOG9nmn3spDgTHUxUU+gaW3QbOQxbeJjJ/9QpKG7hiGJdgLQ/+nO//5M46hOovFHCk+BSB7Y2vaq+Sv15vhHvm84SVGSa5/jfXe7f/63XXP28SNwliIDfnxMtCyfNdQ2mbhRYR0XeiU5ls+nHjy0yMWQon1dhE/XatbRikLaDqiL3iRxvsX6JxtDV5/VmCSIs6Vifzn4LnWQPEdMdVt/+q2R9SUKoQKoxWf2ACI8vdXYfDLBz8EcDqenDPnMSVR9UW//Wgw0wOjeSBKCKU4ao//z4BA/Wey7fMh1gp/5EffTMDIIHub2rDnn4BmmbQuDGvHUnmedymn807B5h/1cEgZ7V06irQOLhMs6178mXOmrjftG1vkdjZAEoHbHi9pnPhdmsM0W0fbs4ULKMf0Ef7tKSuat9C2Omapr9u98APi+9Thfyp9gFEhX1ZGAGrY02v4667j+eJhhhhAOl8Tp8lMBwO5CVaWNk+E/K9tWnMyRNF4JsqPh0t66vfMB+g0Pr/mTcfCDoykWcN2Lr04bennlqJ5NxmmoWz8cVr2T+cPYO+5qJS1PNn3rhg/6t0e73SSkd9OL/MWb/+NKJzTr122tGeG8MZrNu/TNA3Nqg1OV/8DPqOk3EpJbM2oorDmzsBnfi8f/mpp1zQZkTn1QFJ/0TI8DELxwQfUPBbfngnHuFTW5XOFV4JhtEl4oUOU6jk7WKKnbnAQXgP8Ps2H8eP0/zf+rvfM1SuTR4lDDBrDh/zhukNFQhkm0TwceG9VW0p9OA7DcIDe264CAAT0F/5FflPVWmLpAfDtGJHmhp4TRNePQs6TjCYn+chQZgYGXDZHTmb+RhfcNgHcoOhLH7ZcLs357uOdMzyLmUTJdbEKSOwLdpsAQcOqm9jEb+CkKTJX1UJKxWi+9XD/7HeAAAA=",
+    "price": 900,
+    "catchTime": {
+        "startHour": 0,
+        "endHour": 24,
+        "northernHemisphereMonths": [
+            "JAN", "FEB", "MAR", "NOV", "DEC"
+        ],
+        "southernHemisphereMonths": [
+            "MAY", "JUN", "JUL", "AUG", "SEP"
+        ]
+    },
+    "location": "RIVER",
+    "shadowSize": "ONE"
+}

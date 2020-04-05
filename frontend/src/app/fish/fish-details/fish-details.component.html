@@ -1,0 +1,12 @@
+<div class="fish-details">
+    <div *ngIf="fish$ | async as fish">
+      <mat-list>
+        <mat-list-item>{{ 'Name' | translate }}: {{ fish.name | translate }}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>{{ 'Selling Price' | translate }}: {{ fish.price | number }}</mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>{{ 'Location' | translate }}: {{'FISH_LOCATIONS.' + fish.location | translate}}</mat-list-item>
+      </mat-list>
+    </div>
+  </div>
+  

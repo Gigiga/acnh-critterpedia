@@ -1,0 +1,24 @@
+.grid-container {
+  margin: 20px;
+}
+
+.collectibles {
+  height: 100%;
+  flex-direction: row;
+  box-sizing: border-box;
+  display: flex;
+  place-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+
+  .collectible {
+    margin: 15px;
+    padding: 5px;
+
+    img {
+      width: 65px;
+      height: 65px;
+      cursor: pointer;
+    }
+  }
+}

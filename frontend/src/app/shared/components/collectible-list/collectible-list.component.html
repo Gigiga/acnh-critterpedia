@@ -1,0 +1,21 @@
+<div class="grid-container">
+    <mat-form-field>
+      <input type="text"
+             [placeholder]="'Search' | translate"
+             aria-label="Search"
+             matInput
+             [formControl]="searchControl"
+             [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let collectible of collectibles" [value]="collectible.name | translate">
+          {{collectible.name | translate}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  
+  <div class="collectibles" fxLayout="row" fxLayoutAlign="start start" >
+    <mat-card class="collectible" *ngFor="let collectible of collectibles">
+      <img [matTooltip]="collectible.name | translate" [src]="collectible.image" [alt]="collectible.name | translate" (click)="showDetails(collectible.name)">
+    </mat-card>
+  </div>
+</div>

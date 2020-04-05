@@ -1,0 +1,43 @@
+{
+  "Fish": "Fish",
+  "Bugs": "Bugs",
+  "Fossils": "Fossils",
+  "{bells} Bells": "{bells} Bells",
+  "{bells} Bell": "{bells} Bell",
+  "Search": "Search",
+  "Name": "Name",
+  "Selling Price": "Selling Price",
+  "Location": "Location",
+  "BUG_LOCATIONS": {
+    "FLYING": "Flying",
+    "FLYING_BY_HYBRID_FLOWERS": "Flying by hybrid flowers",
+    "FLYING_BY_LIGHT": "Flying by light",
+    "TREES": "Trees",
+    "GROUND": "Ground",
+    "WHITE_FLOWERS": "White flowers",
+    "SHAKING_TREES": "Shaking trees",
+    "UNDERGROUND": "Underground",
+    "POND_AND_RIVERS": "Ponds and rivers",
+    "FLOWERS": "Flowers",
+    "TREESTUMPS": "Treestumps",
+    "COCONUT_TREES": "Coconut trees",
+    "GROUND_ROLLING_SNOWBALLS": "Rolling snowballs on the ground",
+    "UNDER_TREES_DISGUISED_LEAFS": "Under trees disguised as leafs",
+    "ROTTEN_FRUIT": "Rotten fruits",
+    "BEACH": "Beach",
+    "BEACH_ROCKS": "Beach rocks",
+    "TRASH": "Trash",
+    "VILAGERS_HATS": "On villager hats",
+    "ROCKS_RAINING": "On rocks while it's raining",
+    "HITTING_ROCKS": "Hitting rocks"
+  },
+  "FISH_LOCATIONS": {
+    "RIVER": "Rivers",
+    "POND": "Ponds",
+    "RIVER_CLIFFTOP": "River on clifftop",
+    "SEA": "Sea",
+    "PIER": "Piers",
+    "RIVER_MOUTH": "River mouths",
+    "SEA_RAINING": "Sea while it's raining"
+  }
+}
