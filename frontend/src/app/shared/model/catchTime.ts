@@ -9,7 +9,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { Months } from './months';
+import { Month } from './months';
 
 /**
  * Availability time of the creature
@@ -26,9 +26,9 @@ export interface CatchTime {
   /**
    * Availability months in northern hemisphere
    */
-  northernHemisphereMonths?: Array<Months>;
+  northernHemisphereMonths?: Array<Month>;
   /**
    * Availability months in southern hemisphere
    */
-  southernHemisphereMonths?: Array<Months>;
+  southernHemisphereMonths?: Array<Month>;
 }

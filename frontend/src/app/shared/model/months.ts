@@ -38,3 +38,7 @@ export const Months = {
   NOV: 'NOV' as Months,
   DEC: 'DEC' as Months,
 };
+
+export interface Month {
+  name: Months;
+}

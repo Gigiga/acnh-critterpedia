@@ -5,8 +5,8 @@
 
 export const environment = {
   production: false,
-  basePath: '',
-  useMocks: true
+  basePath: 'http://localhost:8080',
+  useMocks: false
 };
 
 /*

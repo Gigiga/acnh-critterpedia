@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { CatchTime, Months } from '../../model/models';
+import { CatchTime, Months, Month } from '../../model/models';
 import { ConfigurationService } from '../../service/configuration.service';
 
 @Component({
@@ -31,9 +31,9 @@ export class CatchTimeDetailsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroyed$))
       .subscribe(
         (southernHemisphere) =>
-          (this.catchableMonths = southernHemisphere
+          (this.catchableMonths = this.mapMonths(southernHemisphere
             ? this.catchTime.southernHemisphereMonths
-            : this.catchTime.northernHemisphereMonths)
+            : this.catchTime.northernHemisphereMonths))
       );
 
     this.startDate.setHours(this.catchTime.startHour, 0);
@@ -44,5 +44,9 @@ export class CatchTimeDetailsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroyed$.next();
     this.destroyed$.complete();
+  }
+
+  mapMonths(months: Month[]): Months[] {
+    return months.map((month) => month.name);
   }
 }
