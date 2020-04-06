@@ -1,6 +1,6 @@
 package com.acnh.critterpedia.datagrabber.extractor;
 
-import com.acnh.critterpedia.datagrabber.grabber.HtmlMonthGrabber;
+import com.acnh.critterpedia.datagrabber.grabber.HtmlCatchTimeGrabber;
 import com.acnh.critterpedia.datagrabber.grabber.HttpImageGrabber;
 import com.acnh.critterpedia.model.Bug;
 import com.acnh.critterpedia.model.CatchTime;
@@ -21,7 +21,7 @@ public class BugHtmlExtractor implements BugExtractor {
     HttpImageGrabber imageGrabber;
 
     @Autowired
-    HtmlMonthGrabber monthGrabber;
+    HtmlCatchTimeGrabber catchTimeGrabber;
 
     @Override
     public List<Bug> extract() {
@@ -33,21 +33,18 @@ public class BugHtmlExtractor implements BugExtractor {
 
             for (Element tableRow : northernHemisphereTable.select("tr")) {
                 Elements tableData = tableRow.select("td");
+                if (tableData.size() == 0) continue;
+
                 Bug bug = new Bug();
                 bug.setName(tableData.get(0).selectFirst("a").text());
                 bug.setImage(imageGrabber.grab(tableData.get(1).selectFirst("a").attr("href")));
                 bug.setPrice(Integer.parseInt(tableData.get(2).text()));
                 bug.setLocation(translateLocation(tableData.get(3).text()));
 
-                CatchTime catchTime = new CatchTime();
-                catchTime.setStartHour(extractStartHour(tableData.get(4).selectFirst("small").text()));
-                catchTime.setStartHour(extractEndHour(tableData.get(4).selectFirst("small").text()));
-                catchTime.setNorthernHemisphereMonths(monthGrabber.grab(tableData.get(5)));
-
-                Element southernHemisphereTableRow = southernHemisphereTable.selectFirst("td a:contains(" + bug.getName() + ")").parent().parent();
-                catchTime.setSouthernHemisphereMonths(monthGrabber.grab(southernHemisphereTableRow.select("td").get(5)));
-
+                Element southernHemisphereTableRow = southernHemisphereTable.selectFirst("td a:contains(" + escapeQuotes(bug.getName()) + ")").parent().parent();
+                CatchTime catchTime = catchTimeGrabber.grab(tableData.get(4), southernHemisphereTableRow.select("td").get(5));
                 bug.setCatchTime(catchTime);
+                bugs.add(bug);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -56,28 +53,8 @@ public class BugHtmlExtractor implements BugExtractor {
         return bugs;
     }
 
-    private int extractHour(String hourString) {
-        String[] hourParts = hourString.trim().split(" ");
-        int hour = Integer.parseInt(hourParts[0]);
-
-        if ("PM".equals((hourParts[1]))) {
-            hour += 12;
-        }
-        return hour;
-    }
-
-    private int extractStartHour(String text) {
-        if ("All day".equals(text)) {
-            return 0;
-        }
-        return extractHour(text.split("-")[0]);
-    }
-
-    private int extractEndHour(String text) {
-        if ("All day".equals(text)) {
-            return 24;
-        }
-        return extractHour(text.split("-")[1]);
+    private String escapeQuotes(String text) {
+        return text.replaceAll("'", "\\\\'").replaceAll("\"", "\\\\\"");
     }
 
     private Bug.LocationEnum translateLocation(String text) {

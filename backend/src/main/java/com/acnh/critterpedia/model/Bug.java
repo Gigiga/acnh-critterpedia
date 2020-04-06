@@ -15,6 +15,7 @@ import javax.persistence.*;
 public class Bug {
     @Id
     private String name;
+    @Column(columnDefinition = "TEXT")
     private String image;
     private int price;
     @Enumerated(EnumType.STRING)
