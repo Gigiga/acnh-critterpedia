@@ -25,10 +25,18 @@ export class CollectibleListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     combineLatest(
       concat(of(''), this.searchControl.valueChanges),
-      this.collectibles$.pipe(tap(() => this.loading = false), finalize(() => this.loading = false))
-    ).pipe(takeUntil(this.destroyed$)).subscribe(([filter, collectibles]) => {
-      this.collectibles = collectibles.filter((collectible) => collectible.name.includes(filter));
-    });
+      this.collectibles$.pipe(
+        tap(() => (this.loading = false)),
+        finalize(() => (this.loading = false))
+      )
+    )
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(([filter, collectibles]) => {
+        filter = filter.toUpperCase();
+        this.collectibles = collectibles.filter((collectible) =>
+          collectible.name.toUpperCase().includes(filter)
+        );
+      });
   }
 
   ngOnDestroy() {
