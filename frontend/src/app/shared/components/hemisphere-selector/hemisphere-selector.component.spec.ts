@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HemisphereSelectorComponent } from './hemisphere-selector.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('HemisphereSelectorComponent', () => {
   let component: HemisphereSelectorComponent;
@@ -8,7 +9,8 @@ describe('HemisphereSelectorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HemisphereSelectorComponent ]
+      declarations: [ HemisphereSelectorComponent ],
+      imports: [TranslateModule.forRoot()]
     })
     .compileComponents();
   }));

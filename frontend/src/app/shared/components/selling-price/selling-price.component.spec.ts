@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SellingPriceComponent } from './selling-price.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('SellingPriceComponent', () => {
   let component: SellingPriceComponent;
@@ -8,7 +9,8 @@ describe('SellingPriceComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SellingPriceComponent ]
+      declarations: [ SellingPriceComponent ],
+      imports: [TranslateModule.forRoot()]
     })
     .compileComponents();
   }));

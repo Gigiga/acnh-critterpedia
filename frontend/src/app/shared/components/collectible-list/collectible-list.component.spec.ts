@@ -8,6 +8,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 
 import { CollectibleListComponent } from './collectible-list.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 describe('CollectibleListComponent', () => {
   let component: CollectibleListComponent;
@@ -17,13 +19,8 @@ describe('CollectibleListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [CollectibleListComponent],
       imports: [
-        NoopAnimationsModule,
-        LayoutModule,
-        MatButtonModule,
-        MatCardModule,
-        MatGridListModule,
-        MatIconModule,
-        MatMenuModule,
+        MatAutocompleteModule,
+        TranslateModule.forRoot(),
       ]
     }).compileComponents();
   }));

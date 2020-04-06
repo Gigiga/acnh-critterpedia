@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FossilDetailsComponent } from './fossil-details.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('FossilDetailsComponent', () => {
   let component: FossilDetailsComponent;
@@ -8,7 +10,8 @@ describe('FossilDetailsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FossilDetailsComponent ]
+      declarations: [ FossilDetailsComponent ],
+      imports: [HttpClientTestingModule, RouterTestingModule]
     })
     .compileComponents();
   }));

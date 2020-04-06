@@ -1,6 +1,8 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { TranslateModule } from '@ngx-translate/core';
 import { FossilListComponent } from './fossil-list.component';
+
 
 describe('FossilListComponent', () => {
   let component: FossilListComponent;
@@ -8,7 +10,8 @@ describe('FossilListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FossilListComponent ]
+      declarations: [ FossilListComponent ],
+      imports: [TranslateModule.forRoot(), HttpClientTestingModule],
     })
     .compileComponents();
   }));
