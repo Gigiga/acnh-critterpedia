@@ -17,7 +17,12 @@
   </mat-autocomplete>
 </mat-form-field>
 
-<div class="collectibles">
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>
+
+<div class="collectibles" *ngIf="!loading">
+  <div *ngIf="collectibles.length === 0">
+    {{"No entries found" | translate}}
+  </div>
   <mat-card class="collectible" *ngFor="let collectible of collectibles">
     <a [routerLink]="['/', baseLink, collectible.name]">
       <img

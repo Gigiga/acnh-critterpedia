@@ -13,6 +13,10 @@
   "Southern Hemisphere": "Southern Hemisphere",
   "Northern Hemisphere": "Northern Hemisphere",
   "Shadow Size": "Shadow Size",
+  "No entries found": "No entries found",
+  "CreatureNotFound": "{{name}} not found!",
+  "CreatureLoadError": "Failed to fetch data for {{name}}",
+  "Dismiss": "Dismiss",
   "BUG_LOCATIONS": {
     "FLYING": "Flying",
     "FLYING_BY_HYBRID_FLOWERS": "Flying by hybrid flowers",

@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { combineLatest, concat, Observable, of, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, tap, finalize } from 'rxjs/operators';
 import { Collectible } from '../../model/collectible';
 
 @Component({
@@ -12,6 +12,7 @@ import { Collectible } from '../../model/collectible';
 export class CollectibleListComponent implements OnInit, OnDestroy {
   @Input() collectibles$: Observable<Collectible[]>;
   @Input() baseLink: string;
+  @Input() loading = true;
 
   private destroyed$ = new Subject();
 
@@ -24,7 +25,7 @@ export class CollectibleListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     combineLatest(
       concat(of(''), this.searchControl.valueChanges),
-      this.collectibles$
+      this.collectibles$.pipe(tap(() => this.loading = false), finalize(() => this.loading = false))
     ).pipe(takeUntil(this.destroyed$)).subscribe(([filter, collectibles]) => {
       this.collectibles = collectibles.filter((collectible) => collectible.name.includes(filter));
     });

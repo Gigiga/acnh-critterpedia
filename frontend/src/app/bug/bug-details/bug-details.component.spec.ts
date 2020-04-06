@@ -1,8 +1,8 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { BugService } from 'src/app/shared/api/bug.service';
 import { BugDetailsComponent } from './bug-details.component';
 
 describe('BugDetailsComponent', () => {
@@ -12,7 +12,12 @@ describe('BugDetailsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [BugDetailsComponent],
-      imports: [RouterTestingModule, TranslateModule.forRoot(), HttpClientTestingModule],
+      imports: [
+        RouterTestingModule,
+        TranslateModule.forRoot(),
+        HttpClientTestingModule,
+        MatSnackBarModule,
+      ],
     }).compileComponents();
   }));
 

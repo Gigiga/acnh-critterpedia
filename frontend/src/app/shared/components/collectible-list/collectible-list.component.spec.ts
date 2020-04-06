@@ -10,6 +10,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { CollectibleListComponent } from './collectible-list.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { of } from 'rxjs';
 
 describe('CollectibleListComponent', () => {
   let component: CollectibleListComponent;
@@ -28,6 +29,12 @@ describe('CollectibleListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CollectibleListComponent);
     component = fixture.componentInstance;
+    component.collectibles$ = of([
+      {
+        name: 'Pale Chub',
+        image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQYV2NgYAAAAAMAAWgmWQ0AAAAASUVORK5CYII='
+      }
+    ])
     fixture.detectChanges();
   });
 
