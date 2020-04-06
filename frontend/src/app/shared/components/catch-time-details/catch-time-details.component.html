@@ -1,12 +1,24 @@
-<h2><app-hemisphere-selector></app-hemisphere-selector> {{'Catch Time' | translate}}</h2>
+<h2>
+  <app-hemisphere-selector></app-hemisphere-selector>
+  {{ "Catch Time" | translate }}
+</h2>
 <h3 class="time" *ngIf="!allDay">
-    {{startDate | date:'HH:mm'}} - {{endDate | date:'HH:mm'}}
+  <span class="icon-text"
+    ><mat-icon>schedule</mat-icon>{{ startDate | date: "HH:mm" }} -
+    {{ endDate | date: "HH:mm" }}</span
+  >
 </h3>
 <h3 class="time" *ngIf="allDay">
-    All day!
+  <span class="icon-text"
+    ><mat-icon>schedule</mat-icon>{{ "All day!" | translate }}</span
+  >
 </h3>
 <div class="months">
-    <div *ngFor="let month of monthArray" class="month" [class.active]="catchableMonths.includes(month)">
-        {{'MONTHS.' + month | translate}}
-    </div>
+  <div
+    *ngFor="let month of monthArray"
+    class="month"
+    [class.active]="catchableMonths.includes(month)"
+  >
+    {{ "MONTHS." + month | translate }}
+  </div>
 </div>

@@ -17,6 +17,7 @@
   "CreatureNotFound": "{{name}} not found!",
   "CreatureLoadError": "Failed to fetch data for {{name}}",
   "Dismiss": "Dismiss",
+  "All day!": "All day!",
   "BUG_LOCATIONS": {
     "FLYING": "Flying",
     "FLYING_BY_HYBRID_FLOWERS": "Flying by hybrid flowers",
