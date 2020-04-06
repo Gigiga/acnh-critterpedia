@@ -43,7 +43,6 @@ public class FishHtmlExtractor implements FishExtractor {
                 fish.setLocation(translateLocation(tableData.get(3).text()));
                 fish.setShadowSize(translateShadowSize(tableData.get(4).text()));
 
-                System.out.println(escapeQuotes(fish.getName()));
                 Element southernHemisphereTableRow = southernHemisphereTable.selectFirst("td a:matches((?i)^" + escapeQuotes(fish.getName()) + "$)").parent().parent();
                 CatchTime catchTime = catchTimeGrabber.grab(tableData.get(5), southernHemisphereTableRow.select("td").get(6));
                 fish.setCatchTime(catchTime);
