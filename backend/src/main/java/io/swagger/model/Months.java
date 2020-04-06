@@ -1,57 +1,79 @@
 package io.swagger.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModelProperty;
+import org.springframework.validation.annotation.Validated;
+
+import java.util.Objects;
 
 /**
- * Gets or Sets months
+ * Months
  */
-public enum Months {
+@Validated
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-04-06T17:23:51.744Z")
 
-    JAN("JAN"),
+public class Months {
+    @JsonProperty("name")
+    private String name = null;
 
-    FEB("FEB"),
+    public Months name(String name) {
+        this.name = name;
+        return this;
+    }
 
-    MAR("MAR"),
+    /**
+     * Identifier of the month
+     *
+     * @return name
+     **/
+    @ApiModelProperty(example = "JAN", value = "Identifier of the month")
 
-    APR("APR"),
 
-    MAY("MAY"),
+    public String getName() {
+        return name;
+    }
 
-    JUN("JUN"),
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    JUL("JUL"),
 
-    AUG("AUG"),
-
-    SEP("SEP"),
-
-    OCT("OCT"),
-
-    NOV("NOV"),
-
-    DEC("DEC");
-
-    private String value;
-
-    Months(String value) {
-        this.value = value;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Months months = (Months) o;
+        return Objects.equals(this.name, months.name);
     }
 
     @Override
-    @JsonValue
-    public String toString() {
-        return String.valueOf(value);
+    public int hashCode() {
+        return Objects.hash(name);
     }
 
-    @JsonCreator
-    public static Months fromValue(String text) {
-        for (Months b : Months.values()) {
-            if (String.valueOf(b.value).equals(text)) {
-                return b;
-            }
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("class Months {\n");
+
+        sb.append("    name: ").append(toIndentedString(name)).append("\n");
+        sb.append("}");
+        return sb.toString();
+    }
+
+    /**
+     * Convert the given object to string with each line indented by 4 spaces
+     * (except the first line).
+     */
+    private String toIndentedString(Object o) {
+        if (o == null) {
+            return "null";
         }
-        return null;
+        return o.toString().replace("\n", "\n    ");
     }
 }
 

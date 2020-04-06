@@ -4,21 +4,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.Pattern;
 import java.util.Objects;
 
 /**
  * Fossil
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-04-05T12:35:19.500Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-04-06T17:23:51.744Z")
 
 public class Fossil {
     @JsonProperty("name")
     private String name = null;
 
     @JsonProperty("image")
-    private byte[] image = null;
+    private String image = null;
 
     @JsonProperty("price")
     private Integer price = null;
@@ -44,7 +43,7 @@ public class Fossil {
         this.name = name;
     }
 
-    public Fossil image(byte[] image) {
+    public Fossil image(String image) {
         this.image = image;
         return this;
     }
@@ -56,12 +55,12 @@ public class Fossil {
      **/
     @ApiModelProperty(value = "Image of the fossil")
 
-    @Pattern(regexp = "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$")
-    public byte[] getImage() {
+
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
@@ -88,7 +87,7 @@ public class Fossil {
 
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -122,7 +121,7 @@ public class Fossil {
      * Convert the given object to string with each line indented by 4 spaces
      * (except the first line).
      */
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }

@@ -15,9 +15,12 @@ import java.util.Objects;
  */
 @ApiModel(description = "Availability time of the creature")
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-04-05T12:35:19.500Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-04-06T17:23:51.744Z")
 
 public class CatchTime {
+    @JsonProperty("id")
+    private Integer id = null;
+
     @JsonProperty("startHour")
     private Integer startHour = null;
 
@@ -31,6 +34,27 @@ public class CatchTime {
     @JsonProperty("southernHemisphereMonths")
     @Valid
     private List<Months> southernHemisphereMonths = null;
+
+    public CatchTime id(Integer id) {
+        this.id = id;
+        return this;
+    }
+
+    /**
+     * Identifier of the catchtime
+     *
+     * @return id
+     **/
+    @ApiModelProperty(example = "1", value = "Identifier of the catchtime")
+
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public CatchTime startHour(Integer startHour) {
         this.startHour = startHour;
@@ -136,7 +160,7 @@ public class CatchTime {
 
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -144,7 +168,8 @@ public class CatchTime {
             return false;
         }
         CatchTime catchTime = (CatchTime) o;
-        return Objects.equals(this.startHour, catchTime.startHour) &&
+        return Objects.equals(this.id, catchTime.id) &&
+                Objects.equals(this.startHour, catchTime.startHour) &&
                 Objects.equals(this.endHour, catchTime.endHour) &&
                 Objects.equals(this.northernHemisphereMonths, catchTime.northernHemisphereMonths) &&
                 Objects.equals(this.southernHemisphereMonths, catchTime.southernHemisphereMonths);
@@ -152,7 +177,7 @@ public class CatchTime {
 
     @Override
     public int hashCode() {
-        return Objects.hash(startHour, endHour, northernHemisphereMonths, southernHemisphereMonths);
+        return Objects.hash(id, startHour, endHour, northernHemisphereMonths, southernHemisphereMonths);
     }
 
     @Override
@@ -160,6 +185,7 @@ public class CatchTime {
         StringBuilder sb = new StringBuilder();
         sb.append("class CatchTime {\n");
 
+        sb.append("    id: ").append(toIndentedString(id)).append("\n");
         sb.append("    startHour: ").append(toIndentedString(startHour)).append("\n");
         sb.append("    endHour: ").append(toIndentedString(endHour)).append("\n");
         sb.append("    northernHemisphereMonths: ").append(toIndentedString(northernHemisphereMonths)).append("\n");
@@ -172,7 +198,7 @@ public class CatchTime {
      * Convert the given object to string with each line indented by 4 spaces
      * (except the first line).
      */
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }

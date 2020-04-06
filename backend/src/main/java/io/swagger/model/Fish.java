@@ -7,31 +7,28 @@ import io.swagger.annotations.ApiModelProperty;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Pattern;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /**
  * Fish
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-04-05T12:35:19.500Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-04-06T17:23:51.744Z")
 
 public class Fish {
     @JsonProperty("name")
     private String name = null;
 
     @JsonProperty("image")
-    private byte[] image = null;
+    private String image = null;
 
     @JsonProperty("price")
     private Integer price = null;
 
     /**
-     * Gets or Sets locations
+     * Gets or Sets location
      */
-    public enum LocationsEnum {
+    public enum LocationEnum {
         RIVER("RIVER"),
 
         POND("POND"),
@@ -48,7 +45,7 @@ public class Fish {
 
         private String value;
 
-        LocationsEnum(String value) {
+        LocationEnum(String value) {
             this.value = value;
         }
 
@@ -59,8 +56,8 @@ public class Fish {
         }
 
         @JsonCreator
-        public static LocationsEnum fromValue(String text) {
-            for (LocationsEnum b : LocationsEnum.values()) {
+        public static LocationEnum fromValue(String text) {
+            for (LocationEnum b : LocationEnum.values()) {
                 if (String.valueOf(b.value).equals(text)) {
                     return b;
                 }
@@ -69,9 +66,8 @@ public class Fish {
         }
     }
 
-    @JsonProperty("locations")
-    @Valid
-    private List<LocationsEnum> locations = null;
+    @JsonProperty("location")
+    private LocationEnum location = null;
 
     /**
      * Gets or Sets shadowSize
@@ -145,7 +141,7 @@ public class Fish {
         this.name = name;
     }
 
-    public Fish image(byte[] image) {
+    public Fish image(String image) {
         this.image = image;
         return this;
     }
@@ -157,12 +153,12 @@ public class Fish {
      **/
     @ApiModelProperty(value = "Image of the fish")
 
-    @Pattern(regexp = "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$")
-    public byte[] getImage() {
+
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
@@ -187,33 +183,25 @@ public class Fish {
         this.price = price;
     }
 
-    public Fish locations(List<LocationsEnum> locations) {
-        this.locations = locations;
-        return this;
-    }
-
-    public Fish addLocationsItem(LocationsEnum locationsItem) {
-        if (this.locations == null) {
-            this.locations = new ArrayList<LocationsEnum>();
-        }
-        this.locations.add(locationsItem);
+    public Fish location(LocationEnum location) {
+        this.location = location;
         return this;
     }
 
     /**
-     * Get locations
+     * Get location
      *
-     * @return locations
+     * @return location
      **/
     @ApiModelProperty(value = "")
 
 
-    public List<LocationsEnum> getLocations() {
-        return locations;
+    public LocationEnum getLocation() {
+        return location;
     }
 
-    public void setLocations(List<LocationsEnum> locations) {
-        this.locations = locations;
+    public void setLocation(LocationEnum location) {
+        this.location = location;
     }
 
     public Fish shadowSize(ShadowSizeEnum shadowSize) {
@@ -261,7 +249,7 @@ public class Fish {
 
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -272,14 +260,14 @@ public class Fish {
         return Objects.equals(this.name, fish.name) &&
                 Objects.equals(this.image, fish.image) &&
                 Objects.equals(this.price, fish.price) &&
-                Objects.equals(this.locations, fish.locations) &&
+                Objects.equals(this.location, fish.location) &&
                 Objects.equals(this.shadowSize, fish.shadowSize) &&
                 Objects.equals(this.catchTime, fish.catchTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, image, price, locations, shadowSize, catchTime);
+        return Objects.hash(name, image, price, location, shadowSize, catchTime);
     }
 
     @Override
@@ -290,7 +278,7 @@ public class Fish {
         sb.append("    name: ").append(toIndentedString(name)).append("\n");
         sb.append("    image: ").append(toIndentedString(image)).append("\n");
         sb.append("    price: ").append(toIndentedString(price)).append("\n");
-        sb.append("    locations: ").append(toIndentedString(locations)).append("\n");
+        sb.append("    location: ").append(toIndentedString(location)).append("\n");
         sb.append("    shadowSize: ").append(toIndentedString(shadowSize)).append("\n");
         sb.append("    catchTime: ").append(toIndentedString(catchTime)).append("\n");
         sb.append("}");
@@ -301,7 +289,7 @@ public class Fish {
      * Convert the given object to string with each line indented by 4 spaces
      * (except the first line).
      */
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }

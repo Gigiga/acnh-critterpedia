@@ -193,26 +193,24 @@
   },
   "definitions": {
     "months": {
-      "type": "string",
-      "enum": [
-        "JAN",
-        "FEB",
-        "MAR",
-        "APR",
-        "MAY",
-        "JUN",
-        "JUL",
-        "AUG",
-        "SEP",
-        "OCT",
-        "NOV",
-        "DEC"
-      ]
+      "type": "object",
+      "properties": {
+        "name": {
+          "example": "JAN",
+          "description": "Identifier of the month",
+          "type": "string"
+        }
+      }
     },
     "catchTime": {
       "type": "object",
       "description": "Availability time of the creature",
       "properties": {
+        "id": {
+          "example": "1",
+          "description": "Identifier of the catchtime",
+          "type": "integer"
+        },
         "startHour": {
           "example": "12",
           "description": "Availability start hour",
@@ -249,7 +247,6 @@
         },
         "image": {
           "type": "string",
-          "format": "byte",
           "description": "Image of the fish"
         },
         "price": {
@@ -257,20 +254,17 @@
           "type": "integer",
           "description": "Selling price of the fish"
         },
-        "locations": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "RIVER",
-              "POND",
-              "RIVER_CLIFFTOP",
-              "RIVER_MOUTH",
-              "SEA",
-              "PIER",
-              "SEA_RAINING"
-            ]
-          }
+        "location": {
+          "type": "string",
+          "enum": [
+            "RIVER",
+            "POND",
+            "RIVER_CLIFFTOP",
+            "RIVER_MOUTH",
+            "SEA",
+            "PIER",
+            "SEA_RAINING"
+          ]
         },
         "shadowSize": {
           "type": "string",
@@ -301,7 +295,6 @@
         },
         "image": {
           "type": "string",
-          "format": "byte",
           "description": "Image of the bug"
         },
         "price": {
@@ -309,34 +302,31 @@
           "type": "integer",
           "description": "Selling price of the bug"
         },
-        "locations": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "FLYING",
-              "FLYING_BY_HYBRID_FLOWERS",
-              "FLYING_BY_LIGHT",
-              "TREES",
-              "GROUND",
-              "WHITE_FLOWERS",
-              "SHAKING_TREES",
-              "UNDERGROUND",
-              "POND_AND_RIVERS",
-              "FLOWERS",
-              "TREESTUMPS",
-              "COCONUT_TREES",
-              "GROUND_ROLLING_SNOWBALLS",
-              "UNDER_TREES_DISGUISED_LEAFS",
-              "ROTTEN_FRUIT",
-              "BEACH",
-              "BEACH_ROCKS",
-              "TRASH",
-              "VILLAGERS_HATS",
-              "ROCKS_RAINING",
-              "HITTING_ROCKS"
-            ]
-          }
+        "location": {
+          "type": "string",
+          "enum": [
+            "FLYING",
+            "FLYING_BY_HYBRID_FLOWERS",
+            "FLYING_BY_LIGHT",
+            "TREES",
+            "GROUND",
+            "WHITE_FLOWERS",
+            "SHAKING_TREES",
+            "UNDERGROUND",
+            "POND_AND_RIVERS",
+            "FLOWERS",
+            "TREESTUMPS",
+            "COCONUT_TREES",
+            "GROUND_ROLLING_SNOWBALLS",
+            "UNDER_TREES_DISGUISED_LEAFS",
+            "ROTTEN_FRUIT",
+            "BEACH",
+            "BEACH_ROCKS",
+            "TRASH",
+            "VILLAGERS_HATS",
+            "ROCKS_RAINING",
+            "HITTING_ROCKS"
+          ]
         },
         "catchTime": {
           "$ref": "#/definitions/catchTime"
@@ -353,7 +343,6 @@
         },
         "image": {
           "type": "string",
-          "format": "byte",
           "description": "Image of the fossil"
         },
         "price": {

@@ -7,31 +7,28 @@ import io.swagger.annotations.ApiModelProperty;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Pattern;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /**
  * Bug
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-04-05T12:35:19.500Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-04-06T17:23:51.744Z")
 
 public class Bug {
     @JsonProperty("name")
     private String name = null;
 
     @JsonProperty("image")
-    private byte[] image = null;
+    private String image = null;
 
     @JsonProperty("price")
     private Integer price = null;
 
     /**
-     * Gets or Sets locations
+     * Gets or Sets location
      */
-    public enum LocationsEnum {
+    public enum LocationEnum {
         FLYING("FLYING"),
 
         FLYING_BY_HYBRID_FLOWERS("FLYING_BY_HYBRID_FLOWERS"),
@@ -76,7 +73,7 @@ public class Bug {
 
         private String value;
 
-        LocationsEnum(String value) {
+        LocationEnum(String value) {
             this.value = value;
         }
 
@@ -87,8 +84,8 @@ public class Bug {
         }
 
         @JsonCreator
-        public static LocationsEnum fromValue(String text) {
-            for (LocationsEnum b : LocationsEnum.values()) {
+        public static LocationEnum fromValue(String text) {
+            for (LocationEnum b : LocationEnum.values()) {
                 if (String.valueOf(b.value).equals(text)) {
                     return b;
                 }
@@ -97,9 +94,8 @@ public class Bug {
         }
     }
 
-    @JsonProperty("locations")
-    @Valid
-    private List<LocationsEnum> locations = null;
+    @JsonProperty("location")
+    private LocationEnum location = null;
 
     @JsonProperty("catchTime")
     private CatchTime catchTime = null;
@@ -125,7 +121,7 @@ public class Bug {
         this.name = name;
     }
 
-    public Bug image(byte[] image) {
+    public Bug image(String image) {
         this.image = image;
         return this;
     }
@@ -137,12 +133,12 @@ public class Bug {
      **/
     @ApiModelProperty(value = "Image of the bug")
 
-    @Pattern(regexp = "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$")
-    public byte[] getImage() {
+
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
@@ -167,33 +163,25 @@ public class Bug {
         this.price = price;
     }
 
-    public Bug locations(List<LocationsEnum> locations) {
-        this.locations = locations;
-        return this;
-    }
-
-    public Bug addLocationsItem(LocationsEnum locationsItem) {
-        if (this.locations == null) {
-            this.locations = new ArrayList<LocationsEnum>();
-        }
-        this.locations.add(locationsItem);
+    public Bug location(LocationEnum location) {
+        this.location = location;
         return this;
     }
 
     /**
-     * Get locations
+     * Get location
      *
-     * @return locations
+     * @return location
      **/
     @ApiModelProperty(value = "")
 
 
-    public List<LocationsEnum> getLocations() {
-        return locations;
+    public LocationEnum getLocation() {
+        return location;
     }
 
-    public void setLocations(List<LocationsEnum> locations) {
-        this.locations = locations;
+    public void setLocation(LocationEnum location) {
+        this.location = location;
     }
 
     public Bug catchTime(CatchTime catchTime) {
@@ -220,7 +208,7 @@ public class Bug {
 
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -231,13 +219,13 @@ public class Bug {
         return Objects.equals(this.name, bug.name) &&
                 Objects.equals(this.image, bug.image) &&
                 Objects.equals(this.price, bug.price) &&
-                Objects.equals(this.locations, bug.locations) &&
+                Objects.equals(this.location, bug.location) &&
                 Objects.equals(this.catchTime, bug.catchTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, image, price, locations, catchTime);
+        return Objects.hash(name, image, price, location, catchTime);
     }
 
     @Override
@@ -248,7 +236,7 @@ public class Bug {
         sb.append("    name: ").append(toIndentedString(name)).append("\n");
         sb.append("    image: ").append(toIndentedString(image)).append("\n");
         sb.append("    price: ").append(toIndentedString(price)).append("\n");
-        sb.append("    locations: ").append(toIndentedString(locations)).append("\n");
+        sb.append("    location: ").append(toIndentedString(location)).append("\n");
         sb.append("    catchTime: ").append(toIndentedString(catchTime)).append("\n");
         sb.append("}");
         return sb.toString();
@@ -258,7 +246,7 @@ public class Bug {
      * Convert the given object to string with each line indented by 4 spaces
      * (except the first line).
      */
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }
