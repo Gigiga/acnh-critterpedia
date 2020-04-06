@@ -4,8 +4,8 @@
 </h2>
 <h3 class="time" *ngIf="!allDay">
   <span class="icon-text"
-    ><mat-icon>schedule</mat-icon>{{ startDate | date: "HH:mm" }} -
-    {{ endDate | date: "HH:mm" }}</span
+    ><mat-icon>schedule</mat-icon>{{ startDate | date: "shortTime" }} -
+    {{ endDate | date: "shortTime" }}</span
   >
 </h3>
 <h3 class="time" *ngIf="allDay">
