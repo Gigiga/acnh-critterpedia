@@ -41,7 +41,7 @@ public class BugHtmlExtractor implements BugExtractor {
                 bug.setPrice(Integer.parseInt(tableData.get(2).text()));
                 bug.setLocation(translateLocation(tableData.get(3).text()));
 
-                Element southernHemisphereTableRow = southernHemisphereTable.selectFirst("td a:contains(" + escapeQuotes(bug.getName()) + ")").parent().parent();
+                Element southernHemisphereTableRow = southernHemisphereTable.selectFirst("td a:matches((?i)^" + escapeQuotes(bug.getName()) + "$)").parent().parent();
                 CatchTime catchTime = catchTimeGrabber.grab(tableData.get(4), southernHemisphereTableRow.select("td").get(5));
                 bug.setCatchTime(catchTime);
                 bugs.add(bug);
