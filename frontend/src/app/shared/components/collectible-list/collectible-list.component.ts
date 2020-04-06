@@ -1,9 +1,8 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable, Subject, merge, combineLatest, concat, of } from 'rxjs';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { combineLatest, concat, Observable, of, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Collectible } from '../../model/collectible';
-import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-collectible-list',
@@ -12,7 +11,7 @@ import { FormControl } from '@angular/forms';
 })
 export class CollectibleListComponent implements OnInit, OnDestroy {
   @Input() collectibles$: Observable<Collectible[]>;
-  @Input() routerLink: string;
+  @Input() baseLink: string;
 
   private destroyed$ = new Subject();
 
@@ -20,7 +19,7 @@ export class CollectibleListComponent implements OnInit, OnDestroy {
 
   collectibles: Collectible[] = [];
 
-  constructor(private router: Router) {}
+  constructor() {}
 
   ngOnInit() {
     combineLatest(
@@ -34,9 +33,5 @@ export class CollectibleListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroyed$.next();
     this.destroyed$.complete();
-  }
-
-  showDetails(collectibleName: string) {
-    this.router.navigate([this.routerLink, collectibleName]);
   }
 }

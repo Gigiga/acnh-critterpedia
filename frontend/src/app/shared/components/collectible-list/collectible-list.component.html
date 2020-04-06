@@ -13,9 +13,11 @@
       </mat-autocomplete>
     </mat-form-field>
   
-  <div class="collectibles" fxLayout="row" fxLayoutAlign="start start" >
+  <div class="collectibles">
     <mat-card class="collectible" *ngFor="let collectible of collectibles">
-      <img [matTooltip]="collectible.name | translate" [src]="collectible.image" [alt]="collectible.name | translate" (click)="showDetails(collectible.name)">
+      <a [routerLink]="['/', baseLink, collectible.name]">
+        <img [matTooltip]="collectible.name | translate" [src]="collectible.image" [alt]="collectible.name | translate">
+      </a>
     </mat-card>
   </div>
 </div>

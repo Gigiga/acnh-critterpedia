@@ -10,7 +10,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from 'src/environments/environment';
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BugModule } from './bug/bug.module';
 import { FishModule } from './fish/fish.module';
@@ -48,7 +47,7 @@ export function getProviders() {
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    SharedModule,
     BrowserAnimationsModule,
     MatTabsModule,
     MatGridListModule,
@@ -61,7 +60,6 @@ export function getProviders() {
     FossilModule,
     FishModule,
     BugModule,
-    SharedModule,
   ],
   providers: [...getProviders()],
   bootstrap: [AppComponent],
