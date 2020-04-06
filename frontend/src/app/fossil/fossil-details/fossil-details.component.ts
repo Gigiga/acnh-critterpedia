@@ -13,7 +13,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./fossil-details.component.scss'],
 })
 export class FossilDetailsComponent implements OnInit, OnDestroy {
-  fossil$: Observable<Fossil>;
+  fossil: Fossil;
   fossilName: string;
   loading = true;
 
@@ -28,31 +28,32 @@ export class FossilDetailsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.fossil$ = this.route.paramMap.pipe(
-      takeUntil(this.destroyed$),
-      switchMap((params: ParamMap) => {
-        this.fossilName = params.get('name');
-        this.loading = true;
-        return this.fossilService
-          .getFossil(this.fossilName)
-          .pipe(finalize(() => (this.loading = false)));
-      })
-    );
-
-    this.fossil$.subscribe({
-      error: (error) => {
-        const key =
-          error.status === 404 ? 'CreatureNotFound' : 'CreatureLoadError';
-        this.translate
-          .get([key, 'Dismiss'], { name: this.fossilName })
-          .subscribe((translations) => {
-            this.snackBar.open(translations[key], translations.Dismiss, {
-              duration: 5000,
+    this.route.paramMap
+      .pipe(
+        takeUntil(this.destroyed$),
+        switchMap((params: ParamMap) => {
+          this.fossilName = params.get('name');
+          this.loading = true;
+          return this.fossilService
+            .getFossil(this.fossilName)
+            .pipe(finalize(() => (this.loading = false)));
+        })
+      )
+      .subscribe(
+        (fossil) => (this.fossil = fossil),
+        (error) => {
+          const key =
+            error.status === 404 ? 'CreatureNotFound' : 'CreatureLoadError';
+          this.translate
+            .get([key, 'Dismiss'], { name: this.fossilName })
+            .subscribe((translations) => {
+              this.snackBar.open(translations[key], translations.Dismiss, {
+                duration: 5000,
+              });
+              this.router.navigate(['/fossils']);
             });
-            this.router.navigate(['/fossils']);
-          });
-      },
-    });
+        }
+      );
   }
 
   ngOnDestroy() {

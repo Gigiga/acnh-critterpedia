@@ -13,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./fish-details.component.scss'],
 })
 export class FishDetailsComponent implements OnInit, OnDestroy {
-  fish$: Observable<Fish>;
+  fish: Fish;
   fishName: string;
   loading = true;
 
@@ -24,35 +24,36 @@ export class FishDetailsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private snackBar: MatSnackBar,
-    private translate: TranslateService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
-    this.fish$ = this.route.paramMap.pipe(
-      takeUntil(this.destroyed$),
-      switchMap((params: ParamMap) => {
-        this.fishName = params.get('name');
-        this.loading = true;
-        return this.fishService
-          .getFish(this.fishName)
-          .pipe(finalize(() => (this.loading = false)));
-      })
-    );
-
-    this.fish$.subscribe({
-      error: (error) => {
-        const key =
-          error.status === 404 ? 'CreatureNotFound' : 'CreatureLoadError';
-        this.translate
-          .get([key, 'Dismiss'], { name: this.fishName })
-          .subscribe((translations) => {
-            this.snackBar.open(translations[key], translations.Dismiss, {
-              duration: 5000,
+    this.route.paramMap
+      .pipe(
+        takeUntil(this.destroyed$),
+        switchMap((params: ParamMap) => {
+          this.fishName = params.get('name');
+          this.loading = true;
+          return this.fishService
+            .getFish(this.fishName)
+            .pipe(finalize(() => (this.loading = false)));
+        })
+      )
+      .subscribe(
+        (fish) => (this.fish = fish),
+        (error) => {
+          const key =
+            error.status === 404 ? 'CreatureNotFound' : 'CreatureLoadError';
+          this.translate
+            .get([key, 'Dismiss'], { name: this.fishName })
+            .subscribe((translations) => {
+              this.snackBar.open(translations[key], translations.Dismiss, {
+                duration: 5000,
+              });
+              this.router.navigate(['/fish']);
             });
-            this.router.navigate(['/fish']);
-          });
-      },
-    });
+        }
+      );
   }
 
   ngOnDestroy() {

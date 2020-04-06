@@ -13,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./bug-details.component.scss'],
 })
 export class BugDetailsComponent implements OnInit, OnDestroy {
-  bug$: Observable<Bug>;
+  bug: Bug;
   bugName: string;
   loading = true;
 
@@ -28,31 +28,32 @@ export class BugDetailsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.bug$ = this.route.paramMap.pipe(
-      takeUntil(this.destroyed$),
-      switchMap((params: ParamMap) => {
-        this.bugName = params.get('name');
-        this.loading = true;
-        return this.bugService
-          .getBug(this.bugName)
-          .pipe(finalize(() => (this.loading = false)));
-      })
-    );
-
-    this.bug$.subscribe({
-      error: (error) => {
-        const key =
-          error.status === 404 ? 'CreatureNotFound' : 'CreatureLoadError';
-        this.translate
-          .get([key, 'Dismiss'], { name: this.bugName })
-          .subscribe((translations) => {
-            this.snackBar.open(translations[key], translations.Dismiss, {
-              duration: 5000,
+    this.route.paramMap
+      .pipe(
+        takeUntil(this.destroyed$),
+        switchMap((params: ParamMap) => {
+          this.bugName = params.get('name');
+          this.loading = true;
+          return this.bugService
+            .getBug(this.bugName)
+            .pipe(finalize(() => (this.loading = false)));
+        })
+      )
+      .subscribe(
+        (bug) => (this.bug = bug),
+        (error) => {
+          const key =
+            error.status === 404 ? 'CreatureNotFound' : 'CreatureLoadError';
+          this.translate
+            .get([key, 'Dismiss'], { name: this.bugName })
+            .subscribe((translations) => {
+              this.snackBar.open(translations[key], translations.Dismiss, {
+                duration: 5000,
+              });
+              this.router.navigate(['/bugs']);
             });
-            this.router.navigate(['/bugs']);
-          });
-      },
-    });
+        }
+      );
   }
 
   ngOnDestroy() {
