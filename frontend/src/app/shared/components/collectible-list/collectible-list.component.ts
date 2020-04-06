@@ -23,9 +23,9 @@ export class CollectibleListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     combineLatest(
-      concat(of(''), this.searchControl.valueChanges.pipe(takeUntil(this.destroyed$))),
-      this.collectibles$.pipe(takeUntil(this.destroyed$))
-    ).subscribe(([filter, collectibles]) => {
+      concat(of(''), this.searchControl.valueChanges),
+      this.collectibles$
+    ).pipe(takeUntil(this.destroyed$)).subscribe(([filter, collectibles]) => {
       this.collectibles = collectibles.filter((collectible) => collectible.name.includes(filter));
     });
   }

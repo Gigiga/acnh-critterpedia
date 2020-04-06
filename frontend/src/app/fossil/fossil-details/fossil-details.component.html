@@ -1,10 +1,11 @@
-<div class="fossil-details">
-    <div *ngIf="fossil$ | async as fossil">
-      <mat-list>
-        <mat-list-item>{{ 'Name' | translate }}: {{ fossil.name | translate }}</mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item>{{ 'Selling Price' | translate }}: {{ fossil.price | number }}</mat-list-item>
-      </mat-list>
-    </div>
-  </div>
-  
+<div *ngIf="fossil$ | async as fossil">
+  <mat-list>
+    <mat-list-item
+      >{{ "Name" | translate }}: {{ fossil.name | translate }}</mat-list-item
+    >
+    <mat-divider></mat-divider>
+    <mat-list-item
+      ><app-selling-price [price]="fossil.price"></app-selling-price
+    ></mat-list-item>
+  </mat-list>
+</div>

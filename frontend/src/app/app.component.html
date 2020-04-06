@@ -1,22 +1,42 @@
 <nav mat-tab-nav-bar [backgroundColor]="'primary'">
-  <a mat-tab-link
-     [routerLink]="['/fish']"
-     routerLinkActive #rlaFish="routerLinkActive"
-     [active]="rlaFish.isActive">
-    {{'Fish' | translate}}
+  <a mat-tab-link [routerLink]="['/']">
+    <mat-icon>house</mat-icon>
+    {{ "Critterpedia" | translate }}
   </a>
-  <a mat-tab-link
-     [routerLink]="['/bugs']"
-     routerLinkActive #rlaBugs="routerLinkActive"
-     [active]="rlaBugs.isActive">
-     {{'Bugs' | translate}}
+  <a
+    mat-tab-link
+    [routerLink]="['/fish']"
+    routerLinkActive
+    #rlaFish="routerLinkActive"
+    [active]="rlaFish.isActive"
+  >
+    {{ "Fish" | translate }}
   </a>
-  <a mat-tab-link
-     [routerLink]="['/fossils']"
-     routerLinkActive #rlaFossils="routerLinkActive"
-     [active]="rlaFossils.isActive">
-     {{'Fossils' | translate}}
+  <a
+    mat-tab-link
+    [routerLink]="['/bugs']"
+    routerLinkActive
+    #rlaBugs="routerLinkActive"
+    [active]="rlaBugs.isActive"
+  >
+    {{ "Bugs" | translate }}
+  </a>
+  <a
+    mat-tab-link
+    [routerLink]="['/fossils']"
+    routerLinkActive
+    #rlaFossils="routerLinkActive"
+    [active]="rlaFossils.isActive"
+  >
+    {{ "Fossils" | translate }}
+  </a>
+  <div class="flex-spacer"></div>
+  <a mat-tab-link href="https://github.com/Gigiga/acnh-critterpedia" target="BLANK">
+    <mat-icon>code</mat-icon>
+    {{ "Contribute" | translate }}
   </a>
 </nav>
 
-<router-outlet></router-outlet>
+<div class="content-wrapper">
+  <router-outlet></router-outlet>
+</div>

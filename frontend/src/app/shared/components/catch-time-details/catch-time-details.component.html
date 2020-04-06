@@ -1,0 +1,12 @@
+<h2><app-hemisphere-selector></app-hemisphere-selector> {{'Catch Time' | translate}}</h2>
+<h3 class="time" *ngIf="!allDay">
+    {{startDate | date:'HH:mm'}} - {{endDate | date:'HH:mm'}}
+</h3>
+<h3 class="time" *ngIf="allDay">
+    All day!
+</h3>
+<div class="months">
+    <div *ngFor="let month of monthArray" class="month" [class.active]="catchableMonths.includes(month)">
+        {{'MONTHS.' + month | translate}}
+    </div>
+</div>
