@@ -1,16 +1,34 @@
 {
-    "name": "Common butterfly",
-    "image": "data:image/webp;base64,UklGRoQFAABXRUJQVlA4WAoAAAAQAAAAPwAAPwAAQUxQSMwBAAABkARJtmlbfX3v+7Zt28bItm3btm3btm3btq951ufea5/xG0TEBCDaSZPDauAzWO0GVbFrzd68vGdeC09UuZGr1o8va1OSeqWbiMKvpmczyJmKr/lCRPR5bHwF8dZr9E/tTvMomTh939O/Q5NsfN2D9H/ntORAVBwAlvgGGAtv99L/v1djS3GdRCMbE6DSnBhApdlRyH6DhLdEcdX2CJF/UlTWs/lhWTgGKTZrYu9yc00gSd/wWIsGIP3p4nFXREjc35gp5k4ZcrZpsC9u862JJ4ZIdjJTsvtS9Lbt+Sbr+rV3kvSumExX5OjF+wefj7wh+Y0Onlj7Gdingzdqi37GMmGyboKtuBr5WSIBhk+FuDI/Ywn7GI7G5bIuYtHCcpHeYC/zkYPzWlo+87iIHtztoTDJBk2df4JDBVIs86j6NjI21MaaqanxdbVCsWEqqQ21heqorYpovLKYeySeL5nzVWKKMusqscgQk2ONxCBl6KUJ3cgIlP8k5KykLvN9kW8NAViG+0WOJ1JnbPPtf687WAAg9gTn/56Ugw7N9S96iSj0YX0JI/4ZVXvf1zCR9mN3GaMeYEhcc8jkMW3zOyAYp2S38RP6VoyD6AgBVlA4IJIDAADQEgCdASpAAEAAAMASJYwBXWtANEA/YrrAPQA8qD9nPgz/ab9krA14L99Hu77G/tzl4/uP5Jfkr7gfyvdP/3r8kfyA4wnG/+t/KrVLf7L+TPM+xsf8j2Sv4T/reVn6F/XH4CP1M/2283Jp8SQBnCu2ICvugdNp0SSd5NCYAJbTor+KzNMkFNoZRHmsn73zFx5+xs9jNIjwAPUf6I9SfIgA/v7uq+P9AHwbxOgUlz+s7ff+cTVpqqar3fc4o9Fn3elOAwJP7tpTsyte4wl72hlyQxnSDodKv/Kk6WbaKGFIzdUzn9pCXhaEnLlEf1H9gHqQLnDUZv6Cl8a2RhrauN+P8/f6DQ8V9h3kyPygRe7CtaJJYVSO73ngxO5iHIgvS50H3ORPrcPUilYl7x+CxXG21HH/ZPgatlsrahxFOwNIJFEDKYhxZoC+j6g/RbzV9qUAMHkk3HIXhc3UNKOuhFl2lF19u9Kw3j/Z/XfislHkxeLVdkuGHegjHVdZIOQv0PXt6AM290mh0a5//xLq+DYgwxa8jED+cnyqvVdkw4O/5F1meJrud/6D1QqXLki6jHr24U/p7yX2jz17lm/fJWK8twJrFWsSBP/wjSf74L/4ih9J/g1/E5DUR44qgCBo5dnREoQKzsUruTatK3iMraUHJscb2ho+Xv34B+OgeEi6rKNqPRV4cwXvdfr5WM7rCunP/edBtx/GbaRuHd+o3G7mHZe/my/U5tEUHsSHp3NAiv6MPld6Ju6enmEkVt3+5hf+OmGkeXy89Zcw8RXzMkSFmJUnMTP+NdHNjotPIS2t37KkDvy6ND4GtjluJVg3XSZURY5P4UumZmRE1Zniq45rj/UUpOE1qL6B4hSHiEctzHbsEaGImJH/DeC065GJfF1fzKF48NGU/sJGK+fn56d0//DCvye32IForRbrGD6Z0Jdb38Tbrqv+v1ZudEcOirARSyKut85SlRonZx8YxN41X0W+rV+071FsUQ4yT4sflipZSYv+Yf982tybxf2X73Ulv2oPMJ8wU4TWdH4zaAc9/381N9rDi+GV+MLmfQGdnpui4Drb8QDZHTrfMZJjjJp0tAdkv1kI1e/tZXvv5odZT3jovO1QBSBcbwSEIvsBETOO5ifHeo5xtpGcgJYXNXt5TgAjyPuXRPu9slI9vsdHa9MTHpeXjzjVuKnAJv0+ifvgk+xYWkL9RP9eHEUAAAAAAA==",
-    "price": 160,
-    "location": "FLYING",
-    "catchTime": {
-        "startHour": 4,
-        "endHour": 19,
-        "northernHemisphereMonths": [
-            "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "SEP", "OCT", "NOV", "DEC"
-        ],
-        "southernHemisphereMonths": [
-            "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
-        ]
-    }
+  "name": "Common butterfly",
+  "image": "data:image/webp;base64,UklGRoQFAABXRUJQVlA4WAoAAAAQAAAAPwAAPwAAQUxQSMwBAAABkARJtmlbfX3v+7Zt28bItm3btm3btm3btq951ufea5/xG0TEBCDaSZPDauAzWO0GVbFrzd68vGdeC09UuZGr1o8va1OSeqWbiMKvpmczyJmKr/lCRPR5bHwF8dZr9E/tTvMomTh939O/Q5NsfN2D9H/ntORAVBwAlvgGGAtv99L/v1djS3GdRCMbE6DSnBhApdlRyH6DhLdEcdX2CJF/UlTWs/lhWTgGKTZrYu9yc00gSd/wWIsGIP3p4nFXREjc35gp5k4ZcrZpsC9u862JJ4ZIdjJTsvtS9Lbt+Sbr+rV3kvSumExX5OjF+wefj7wh+Y0Onlj7Gdingzdqi37GMmGyboKtuBr5WSIBhk+FuDI/Ywn7GI7G5bIuYtHCcpHeYC/zkYPzWlo+87iIHtztoTDJBk2df4JDBVIs86j6NjI21MaaqanxdbVCsWEqqQ21heqorYpovLKYeySeL5nzVWKKMusqscgQk2ONxCBl6KUJ3cgIlP8k5KykLvN9kW8NAViG+0WOJ1JnbPPtf687WAAg9gTn/56Ugw7N9S96iSj0YX0JI/4ZVXvf1zCR9mN3GaMeYEhcc8jkMW3zOyAYp2S38RP6VoyD6AgBVlA4IJIDAADQEgCdASpAAEAAAMASJYwBXWtANEA/YrrAPQA8qD9nPgz/ab9krA14L99Hu77G/tzl4/uP5Jfkr7gfyvdP/3r8kfyA4wnG/+t/KrVLf7L+TPM+xsf8j2Sv4T/reVn6F/XH4CP1M/2283Jp8SQBnCu2ICvugdNp0SSd5NCYAJbTor+KzNMkFNoZRHmsn73zFx5+xs9jNIjwAPUf6I9SfIgA/v7uq+P9AHwbxOgUlz+s7ff+cTVpqqar3fc4o9Fn3elOAwJP7tpTsyte4wl72hlyQxnSDodKv/Kk6WbaKGFIzdUzn9pCXhaEnLlEf1H9gHqQLnDUZv6Cl8a2RhrauN+P8/f6DQ8V9h3kyPygRe7CtaJJYVSO73ngxO5iHIgvS50H3ORPrcPUilYl7x+CxXG21HH/ZPgatlsrahxFOwNIJFEDKYhxZoC+j6g/RbzV9qUAMHkk3HIXhc3UNKOuhFl2lF19u9Kw3j/Z/XfislHkxeLVdkuGHegjHVdZIOQv0PXt6AM290mh0a5//xLq+DYgwxa8jED+cnyqvVdkw4O/5F1meJrud/6D1QqXLki6jHr24U/p7yX2jz17lm/fJWK8twJrFWsSBP/wjSf74L/4ih9J/g1/E5DUR44qgCBo5dnREoQKzsUruTatK3iMraUHJscb2ho+Xv34B+OgeEi6rKNqPRV4cwXvdfr5WM7rCunP/edBtx/GbaRuHd+o3G7mHZe/my/U5tEUHsSHp3NAiv6MPld6Ju6enmEkVt3+5hf+OmGkeXy89Zcw8RXzMkSFmJUnMTP+NdHNjotPIS2t37KkDvy6ND4GtjluJVg3XSZURY5P4UumZmRE1Zniq45rj/UUpOE1qL6B4hSHiEctzHbsEaGImJH/DeC065GJfF1fzKF48NGU/sJGK+fn56d0//DCvye32IForRbrGD6Z0Jdb38Tbrqv+v1ZudEcOirARSyKut85SlRonZx8YxN41X0W+rV+071FsUQ4yT4sflipZSYv+Yf982tybxf2X73Ulv2oPMJ8wU4TWdH4zaAc9/381N9rDi+GV+MLmfQGdnpui4Drb8QDZHTrfMZJjjJp0tAdkv1kI1e/tZXvv5odZT3jovO1QBSBcbwSEIvsBETOO5ifHeo5xtpGcgJYXNXt5TgAjyPuXRPu9slI9vsdHa9MTHpeXjzjVuKnAJv0+ifvgk+xYWkL9RP9eHEUAAAAAAA==",
+  "price": 160,
+  "location": "FLYING",
+  "catchTime": {
+    "startHour": 4,
+    "endHour": 19,
+    "northernHemisphereMonths": [
+      { "name": "JAN" },
+      { "name": "FEB" },
+      { "name": "MAR" },
+      { "name": "APR" },
+      { "name": "MAY" },
+      { "name": "JUN" },
+      { "name": "SEP" },
+      { "name": "OCT" },
+      { "name": "NOV" },
+      { "name": "DEC" }
+    ],
+    "southernHemisphereMonths": [
+      { "name": "MAR" },
+      { "name": "APR" },
+      { "name": "MAY" },
+      { "name": "JUN" },
+      { "name": "JUL" },
+      { "name": "AUG" },
+      { "name": "SEP" },
+      { "name": "OCT" },
+      { "name": "NOV" },
+      { "name": "DEC" }
+    ]
+  }
 }
