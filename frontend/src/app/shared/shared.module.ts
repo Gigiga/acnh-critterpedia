@@ -21,13 +21,14 @@ import { HemisphereSelectorComponent } from './components/hemisphere-selector/he
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { SellingPriceComponent } from './components/selling-price/selling-price.component';
 import { MatIconModule } from '@angular/material/icon';
+import { BaseDetailsComponent } from './components/base-details/base-details.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
 
 @NgModule({
-  declarations: [CollectibleListComponent, CatchTimeDetailsComponent, HemisphereSelectorComponent, SellingPriceComponent, LoadingSpinnerComponent],
+  declarations: [CollectibleListComponent, CatchTimeDetailsComponent, HemisphereSelectorComponent, SellingPriceComponent, LoadingSpinnerComponent, BaseDetailsComponent],
   imports: [
     AppRoutingModule,
     CommonModule,

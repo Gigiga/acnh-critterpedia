@@ -1,5 +1,5 @@
 <app-loading-spinner *ngIf="loading"></app-loading-spinner>
-<div *ngIf="bug && !loading">
+<div *ngIf="!loading && item as bug">
   <mat-list>
     <mat-list-item
       >{{ "Name" | translate }}: {{ bug.name | translate }}</mat-list-item

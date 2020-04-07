@@ -1,5 +1,5 @@
 <app-loading-spinner *ngIf="loading"></app-loading-spinner>
-<div *ngIf="fish && !loading">
+<div *ngIf="!loading && item as fish">
   <mat-list>
     <mat-list-item
       >{{ "Name" | translate }}: {{ fish.name | translate }}</mat-list-item
