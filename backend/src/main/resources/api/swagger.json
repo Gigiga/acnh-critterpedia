@@ -202,15 +202,10 @@
         }
       }
     },
-    "catchTime": {
+    "catchHour": {
       "type": "object",
-      "description": "Availability time of the creature",
+      "description": "Start and end hour of catch time",
       "properties": {
-        "id": {
-          "example": "1",
-          "description": "Identifier of the catchtime",
-          "type": "integer"
-        },
         "startHour": {
           "example": "12",
           "description": "Availability start hour",
@@ -220,6 +215,23 @@
           "example": "16",
           "description": "Availability end hour",
           "type": "integer"
+        }
+      }
+    },
+    "catchTime": {
+      "type": "object",
+      "description": "Availability time of the creature",
+      "properties": {
+        "id": {
+          "example": "1",
+          "description": "Identifier of the catchtime",
+          "type": "integer"
+        },
+        "catchHours": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/catchHour"
+          }
         },
         "northernHemisphereMonths": {
           "description": "Availability months in northern hemisphere",

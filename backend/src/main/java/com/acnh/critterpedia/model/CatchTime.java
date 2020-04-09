@@ -17,8 +17,8 @@ public class CatchTime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer startHour;
-    private Integer endHour;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<CatchHour> catchHours;
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Months> northernHemisphereMonths;
     @ManyToMany(cascade = CascadeType.ALL)

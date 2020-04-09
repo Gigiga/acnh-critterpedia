@@ -13,8 +13,7 @@ export class CatchTimeDetailsComponent implements OnInit, OnDestroy {
   @Input() catchTime: CatchTime;
 
   allDay = false;
-  startDate = new Date();
-  endDate = new Date();
+  dates: {startDate: Date, endDate: Date}[] = [];
 
   private destroyed$ = new Subject();
 
@@ -31,14 +30,26 @@ export class CatchTimeDetailsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroyed$))
       .subscribe(
         (southernHemisphere) =>
-          (this.catchableMonths = this.mapMonths(southernHemisphere
-            ? this.catchTime.southernHemisphereMonths
-            : this.catchTime.northernHemisphereMonths))
+          (this.catchableMonths = this.mapMonths(
+            southernHemisphere
+              ? this.catchTime.southernHemisphereMonths
+              : this.catchTime.northernHemisphereMonths
+          ))
       );
 
-    this.startDate.setHours(this.catchTime.startHour, 0);
-    this.endDate.setHours(this.catchTime.endHour, 0);
-    this.allDay = (this.catchTime.endHour - this.catchTime.startHour === 24);
+    const now = new Date();
+    this.dates = this.catchTime.catchHours.map((catchHour) => {
+      return {
+        startDate: new Date(now.getFullYear(), now.getMonth(), now.getDate(), catchHour.startHour),
+        endDate: new Date(now.getFullYear(), now.getMonth(), now.getDate(), catchHour.endHour)
+      }
+    });
+    
+    this.allDay =
+      this.catchTime.catchHours.length === 1 &&
+      this.catchTime.catchHours[0].endHour -
+        this.catchTime.catchHours[0].startHour ===
+        24;
   }
 
   ngOnDestroy() {

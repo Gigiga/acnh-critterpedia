@@ -4,8 +4,12 @@
 </h2>
 <h3 class="time" *ngIf="!allDay">
   <span class="icon-text"
-    ><mat-icon>schedule</mat-icon>{{ startDate | date: "shortTime" }} -
-    {{ endDate | date: "shortTime" }}</span
+  ><mat-icon>schedule</mat-icon>
+    <span *ngFor="let date of dates; let i = index">
+      {{ date.startDate | date: "shortTime" }} -
+      {{ date.endDate | date: "shortTime"
+      }}&nbsp;{{ i === dates.length - 1 ? "" : "&" }}&nbsp;
+    </span></span
   >
 </h3>
 <h3 class="time" *ngIf="allDay">

@@ -2,6 +2,7 @@ package com.acnh.critterpedia.service;
 
 import com.acnh.critterpedia.repository.FishRepository;
 import io.swagger.api.NotFoundException;
+import io.swagger.model.CatchHour;
 import io.swagger.model.CatchTime;
 import io.swagger.model.Fish;
 import io.swagger.model.Months;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class FishServiceImpl implements FishService {
@@ -54,12 +56,20 @@ public class FishServiceImpl implements FishService {
 
     private CatchTime mapCatchTime(com.acnh.critterpedia.model.CatchTime input) {
         CatchTime output = new CatchTime();
-        output.setStartHour(input.getStartHour());
-        output.setEndHour(input.getEndHour());
+        output.setCatchHours(mapCatchHours(input.getCatchHours()));
         output.setNorthernHemisphereMonths(mapMonth(input.getNorthernHemisphereMonths()));
         output.setSouthernHemisphereMonths(mapMonth(input.getSouthernHemisphereMonths()));
 
         return output;
+    }
+
+    private List<CatchHour> mapCatchHours(List<com.acnh.critterpedia.model.CatchHour> catchHours) {
+        return catchHours.stream().map(catchHour -> {
+            CatchHour ch = new CatchHour();
+            ch.setStartHour(catchHour.getStartHour());
+            ch.setEndHour(catchHour.getEndHour());
+            return ch;
+        }).collect(Collectors.toList());
     }
 
     private List<Months> mapMonth(List<com.acnh.critterpedia.model.Months> input) {

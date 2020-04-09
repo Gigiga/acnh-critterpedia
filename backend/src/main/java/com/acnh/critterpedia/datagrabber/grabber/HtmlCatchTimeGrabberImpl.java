@@ -1,9 +1,14 @@
 package com.acnh.critterpedia.datagrabber.grabber;
 
+import com.acnh.critterpedia.model.CatchHour;
 import com.acnh.critterpedia.model.CatchTime;
 import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class HtmlCatchTimeGrabberImpl implements HtmlCatchTimeGrabber {
@@ -13,11 +18,24 @@ public class HtmlCatchTimeGrabberImpl implements HtmlCatchTimeGrabber {
     @Override
     public CatchTime grab(Element northernHemisphereElement, Element southernHemisphereElement) {
         CatchTime catchTime = new CatchTime();
-        catchTime.setStartHour(extractStartHour(northernHemisphereElement.selectFirst("small").text()));
-        catchTime.setEndHour(extractEndHour(northernHemisphereElement.selectFirst("small").text()));
+
+        catchTime.setCatchHours(extractCatchHours(northernHemisphereElement));
+
         catchTime.setNorthernHemisphereMonths(monthGrabber.grab(northernHemisphereElement.nextElementSibling()));
         catchTime.setSouthernHemisphereMonths(monthGrabber.grab(southernHemisphereElement));
         return catchTime;
+    }
+
+    private List<CatchHour> extractCatchHours(Element northernHemisphereElement) {
+        return Arrays.stream(northernHemisphereElement.selectFirst("small").text().split("&")).map(this::extractCatchHour).collect(Collectors.toList());
+    }
+
+    private CatchHour extractCatchHour(String timeExpr) {
+        timeExpr = timeExpr.trim();
+        CatchHour catchHour = new CatchHour();
+        catchHour.setStartHour(extractStartHour(timeExpr));
+        catchHour.setEndHour(extractEndHour(timeExpr));
+        return catchHour;
     }
 
     private int extractHour(String hourString) {

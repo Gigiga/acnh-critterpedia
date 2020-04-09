@@ -10,19 +10,14 @@
  * Do not edit the class manually.
  */
 import { Month } from './months';
+import { CatchHour } from './catchHour';
 
 /**
  * Availability time of the creature
  */
 export interface CatchTime {
-  /**
-   * Availability start hour
-   */
-  startHour?: number;
-  /**
-   * Availability end hour
-   */
-  endHour?: number;
+  catchHours?: Array<CatchHour>;
+
   /**
    * Availability months in northern hemisphere
    */
