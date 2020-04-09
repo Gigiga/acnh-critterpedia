@@ -11,6 +11,9 @@ const routes: Routes = [
   {
     path: 'fish',
     component: FishListComponent,
+    data: {
+      shouldReuse: true
+    }
   },
   {
     path: 'fish/:name',
@@ -19,6 +22,9 @@ const routes: Routes = [
   {
     path: 'bugs',
     component: BugListComponent,
+    data: {
+      shouldReuse: true
+    }
   },
   {
     path: 'bugs/:name',
@@ -27,6 +33,9 @@ const routes: Routes = [
   {
     path: 'fossils',
     component: FossilListComponent,
+    data: {
+      shouldReuse: true
+    }
   },
   {
     path: 'fossils/:name',

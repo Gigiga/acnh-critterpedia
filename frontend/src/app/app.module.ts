@@ -20,6 +20,8 @@ import { FishService } from './shared/api/fish.service';
 import { FossilMockService } from './shared/api/fossil-mock.service';
 import { FossilService } from './shared/api/fossil.service';
 import { SharedModule } from './shared/shared.module';
+import { RouteReuseStrategy } from '@angular/router';
+import { AppRoutingReuseStrategy } from './app-routing-reuse-strategy';
 
 export function getProviders() {
   if(environment.useMocks) {
@@ -59,7 +61,7 @@ export function getProviders() {
     FishModule,
     BugModule,
   ],
-  providers: [...getProviders()],
+  providers: [{provide: RouteReuseStrategy, useClass: AppRoutingReuseStrategy}, ...getProviders()],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

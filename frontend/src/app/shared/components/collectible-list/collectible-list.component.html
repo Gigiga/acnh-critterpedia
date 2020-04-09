@@ -16,6 +16,12 @@
     </mat-option>
   </mat-autocomplete>
 </mat-form-field>
+<mat-form-field>
+  <mat-label>{{'Sort' | translate}}</mat-label>
+  <mat-select [formControl]="sortControl">
+    <mat-option *ngFor="let opt of sortOptions | keyvalue" [value]="opt.key">{{opt.key | translate}}</mat-option>
+  </mat-select>
+</mat-form-field>
 
 <app-loading-spinner *ngIf="loading"></app-loading-spinner>
 

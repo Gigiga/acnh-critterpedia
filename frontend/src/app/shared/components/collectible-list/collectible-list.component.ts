@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { combineLatest, concat, Observable, of, Subject } from 'rxjs';
-import { takeUntil, tap, finalize } from 'rxjs/operators';
+import { finalize, takeUntil, tap } from 'rxjs/operators';
 import { Collectible } from '../../model/collectible';
 
 @Component({
@@ -16,26 +16,41 @@ export class CollectibleListComponent implements OnInit, OnDestroy {
 
   private destroyed$ = new Subject();
 
-  searchControl = new FormControl();
+  searchControl = new FormControl('');
+  sortControl = new FormControl();
+  sortOptions: {[key: string]: (a: Collectible, b: Collectible) => number} = {};
 
   collectibles: Collectible[] = [];
 
-  constructor() {}
+  private registerSortFn(name: string, comparator: (a: Collectible, b: Collectible) => number) {
+    this.sortOptions[name] = comparator;
+  }
+
+  constructor() {
+    this.registerSortFn("Name (Asc)", (a, b) => a.name.localeCompare(b.name));
+    this.registerSortFn("Name (Desc)", (a, b) => b.name.localeCompare(a.name));
+    this.registerSortFn("Price (Asc)", (a, b) => a.price - b.price);
+    this.registerSortFn("Price (Desc)", (a, b) => b.price - a.price);
+  }
 
   ngOnInit() {
     combineLatest(
-      concat(of(''), this.searchControl.valueChanges),
+      concat(of(this.searchControl.value), this.searchControl.valueChanges),
+      concat(of(this.sortControl.value), this.sortControl.valueChanges),
       this.collectibles$.pipe(
         tap(() => (this.loading = false)),
         finalize(() => (this.loading = false))
       )
     )
       .pipe(takeUntil(this.destroyed$))
-      .subscribe(([filter, collectibles]) => {
+      .subscribe(([filter, sortOpt, collectibles]) => {
         filter = filter.toUpperCase();
         this.collectibles = collectibles.filter((collectible) =>
           collectible.name.toUpperCase().includes(filter)
         );
+        if(this.sortOptions[sortOpt]) {
+          this.collectibles.sort(this.sortOptions[sortOpt]);
+        }
       });
   }
 

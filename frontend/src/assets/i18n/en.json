@@ -19,6 +19,11 @@
   "Dismiss": "Dismiss",
   "All day!": "All day!",
   "Contribute": "Contribute",
+  "Sort": "Sort",
+  "Name (Asc)": "Name (Asc)",
+  "Name (Desc)": "Name (Desc)",
+  "Price (Asc)": "Price (Asc)",
+  "Price (Desc)": "Price (Desc)",
   "BUG_LOCATIONS": {
     "FLYING": "Flying",
     "FLYING_BY_HYBRID_FLOWERS": "Flying by hybrid flowers",
