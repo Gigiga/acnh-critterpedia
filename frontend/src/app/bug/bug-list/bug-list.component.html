@@ -1,5 +1,18 @@
 <div class="filter-section">
-    <mat-checkbox [formControl]="seasonOnlyControl">Currently available only</mat-checkbox>
-    <app-hemisphere-selector></app-hemisphere-selector>
+  <mat-form-field>
+    <mat-label>{{ "Locations" | translate }}</mat-label>
+    <mat-select [formControl]="locationControl" multiple>
+      <mat-option *ngFor="let location of locations" [value]="location">{{
+        "BUG_LOCATIONS." + location | translate
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-checkbox [formControl]="seasonOnlyControl">{{
+    "Currently available only" | translate
+  }}</mat-checkbox>
+  <app-hemisphere-selector></app-hemisphere-selector>
 </div>
-<app-collectible-list [collectibles$]="bugs$" [baseLink]="'bugs'"></app-collectible-list>
+<app-collectible-list
+  [collectibles$]="bugs$"
+  [baseLink]="'bugs'"
+></app-collectible-list>

@@ -10,6 +10,7 @@
   "Name": "Name",
   "Selling Price": "Selling Price",
   "Location": "Location",
+  "Locations": "Locations",
   "Southern Hemisphere": "Southern Hemisphere",
   "Northern Hemisphere": "Northern Hemisphere",
   "Shadow Size": "Shadow Size",
@@ -24,6 +25,7 @@
   "Name (Desc)": "Name (Desc)",
   "Price (Asc)": "Price (Asc)",
   "Price (Desc)": "Price (Desc)",
+  "Currently available only": "Currently available only",
   "BUG_LOCATIONS": {
     "FLYING": "Flying",
     "FLYING_BY_HYBRID_FLOWERS": "Flying by hybrid flowers",
@@ -43,7 +45,7 @@
     "BEACH": "Beach",
     "BEACH_ROCKS": "Beach rocks",
     "TRASH": "Trash",
-    "VILAGERS_HATS": "On villager hats",
+    "VILLAGERS_HATS": "On villager hats",
     "ROCKS_RAINING": "On rocks while it's raining",
     "HITTING_ROCKS": "Hitting rocks"
   },

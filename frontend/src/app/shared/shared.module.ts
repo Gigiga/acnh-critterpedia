@@ -73,6 +73,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatSnackBarModule,
     MatCheckboxModule,
     ReactiveFormsModule,
+    MatSelectModule,
   ],
 })
 export class SharedModule {}

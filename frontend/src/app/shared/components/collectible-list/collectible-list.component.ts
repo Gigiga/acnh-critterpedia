@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { combineLatest, concat, Observable, of, Subject } from 'rxjs';
-import { finalize, takeUntil, tap } from 'rxjs/operators';
+import { combineLatest, Observable, Subject } from 'rxjs';
+import { finalize, startWith, takeUntil, tap } from 'rxjs/operators';
 import { Collectible } from '../../model/collectible';
 
 @Component({
@@ -40,8 +40,8 @@ export class CollectibleListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     combineLatest(
-      concat(of(this.searchControl.value), this.searchControl.valueChanges),
-      concat(of(this.sortControl.value), this.sortControl.valueChanges),
+      this.searchControl.valueChanges.pipe(startWith(this.searchControl.value)),
+      this.sortControl.valueChanges.pipe(startWith(this.sortControl.value)),
       this.collectibles$.pipe(
         tap(() => (this.loading = false)),
         finalize(() => (this.loading = false))
