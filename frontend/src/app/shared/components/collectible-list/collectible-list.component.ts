@@ -18,19 +18,24 @@ export class CollectibleListComponent implements OnInit, OnDestroy {
 
   searchControl = new FormControl('');
   sortControl = new FormControl();
-  sortOptions: {[key: string]: (a: Collectible, b: Collectible) => number} = {};
+  sortOptions: {
+    [key: string]: (a: Collectible, b: Collectible) => number;
+  } = {};
 
   collectibles: Collectible[] = [];
 
-  private registerSortFn(name: string, comparator: (a: Collectible, b: Collectible) => number) {
+  private registerSortFn(
+    name: string,
+    comparator: (a: Collectible, b: Collectible) => number
+  ) {
     this.sortOptions[name] = comparator;
   }
 
   constructor() {
-    this.registerSortFn("Name (Asc)", (a, b) => a.name.localeCompare(b.name));
-    this.registerSortFn("Name (Desc)", (a, b) => b.name.localeCompare(a.name));
-    this.registerSortFn("Price (Asc)", (a, b) => a.price - b.price);
-    this.registerSortFn("Price (Desc)", (a, b) => b.price - a.price);
+    this.registerSortFn('Name (Asc)', (a, b) => a.name.localeCompare(b.name));
+    this.registerSortFn('Name (Desc)', (a, b) => b.name.localeCompare(a.name));
+    this.registerSortFn('Price (Asc)', (a, b) => a.price - b.price);
+    this.registerSortFn('Price (Desc)', (a, b) => b.price - a.price);
   }
 
   ngOnInit() {
@@ -48,7 +53,7 @@ export class CollectibleListComponent implements OnInit, OnDestroy {
         this.collectibles = collectibles.filter((collectible) =>
           collectible.name.toUpperCase().includes(filter)
         );
-        if(this.sortOptions[sortOpt]) {
+        if (this.sortOptions[sortOpt]) {
           this.collectibles.sort(this.sortOptions[sortOpt]);
         }
       });

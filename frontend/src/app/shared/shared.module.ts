@@ -13,6 +13,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from '../app-routing.module';
@@ -45,6 +46,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatSnackBarModule,
     MatIconModule,
     MatSelectModule,
+    MatCheckboxModule,
     ReactiveFormsModule,
     TranslateModule.forRoot({
       loader: {
@@ -69,6 +71,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoadingSpinnerComponent,
     MatIconModule,
     MatSnackBarModule,
+    MatCheckboxModule,
+    ReactiveFormsModule,
   ],
 })
 export class SharedModule {}

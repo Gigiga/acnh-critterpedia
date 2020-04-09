@@ -1,1 +1,5 @@
+<div class="filter-section">
+    <mat-checkbox [formControl]="seasonOnlyControl">Currently available only</mat-checkbox>
+    <app-hemisphere-selector></app-hemisphere-selector>
+</div>
 <app-collectible-list [collectibles$]="bugs$" [baseLink]="'bugs'"></app-collectible-list>
