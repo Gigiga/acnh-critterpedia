@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ import javax.validation.Valid;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-04-10T16:36:46.244Z")
 
 @Controller
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class TurnipPatternApiController implements TurnipPatternApi {
     @Autowired
     TurnipService service;
@@ -41,7 +43,7 @@ public class TurnipPatternApiController implements TurnipPatternApi {
         if (accept != null && accept.contains("application/json")) {
             return new ResponseEntity<TurnipPatternMap>(service.getPossiblePatterns(calculationRequest), HttpStatus.CREATED);
         }
-
+        
         return new ResponseEntity<TurnipPatternMap>(HttpStatus.NOT_IMPLEMENTED);
     }
 

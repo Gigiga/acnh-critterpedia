@@ -22,6 +22,7 @@ import { FossilService } from './shared/api/fossil.service';
 import { SharedModule } from './shared/shared.module';
 import { RouteReuseStrategy } from '@angular/router';
 import { AppRoutingReuseStrategy } from './app-routing-reuse-strategy';
+import { TurnipModule } from './turnip/turnip.module';
 
 export function getProviders() {
   if(environment.useMocks) {
@@ -60,6 +61,7 @@ export function getProviders() {
     FossilModule,
     FishModule,
     BugModule,
+    TurnipModule,
   ],
   providers: [{provide: RouteReuseStrategy, useClass: AppRoutingReuseStrategy}, ...getProviders()],
   bootstrap: [AppComponent],

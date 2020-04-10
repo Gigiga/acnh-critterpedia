@@ -1,0 +1,114 @@
+<mat-form-field>
+  <mat-label>{{ "Buy Price" | translate }}</mat-label>
+  <input matInput [formControl]="basePriceControl" />
+</mat-form-field>
+<mat-checkbox [formControl]="firstTimeBuyerControl">{{
+  "First Time Buyer" | translate
+}}</mat-checkbox>
+
+<div class="price-inputs">
+  <app-price-input
+    [weekday]="'Monday'"
+    [formControl]="mondayPriceControl"
+  ></app-price-input>
+  <app-price-input
+    [weekday]="'Tuesday'"
+    [formControl]="tuesdayPriceControl"
+  ></app-price-input>
+  <app-price-input
+    [weekday]="'Wednesday'"
+    [formControl]="wednesdayPriceControl"
+  ></app-price-input>
+  <app-price-input
+    [weekday]="'Thursday'"
+    [formControl]="thursdayPriceControl"
+  ></app-price-input>
+  <app-price-input
+    [weekday]="'Friday'"
+    [formControl]="fridayPriceControl"
+  ></app-price-input>
+  <app-price-input
+    [weekday]="'Saturday'"
+    [formControl]="saturdayPriceControl"
+  ></app-price-input>
+</div>
+
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>
+<div *ngIf="!loading">
+  <div *ngIf="dataSource.data.length === 0 && initialized">
+    {{ "No patterns found" | translate }}
+  </div>
+  <div class="table-wrapper" *ngIf="dataSource.data.length">
+    <table mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="pattern" sticky>
+        <th mat-header-cell *matHeaderCellDef>{{ "Pattern" | translate }}</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.pattern | translate }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="monAm">
+        <th mat-header-cell *matHeaderCellDef>{{'Mon AM' | translate}}</th>
+        <td mat-cell *matCellDef="let element">{{ element.monAm }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="monPm">
+        <th mat-header-cell *matHeaderCellDef>{{'Mon PM' | translate}}</th>
+        <td mat-cell *matCellDef="let element">{{ element.monPm }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="tueAm">
+        <th mat-header-cell *matHeaderCellDef>{{'Tue AM' | translate}}</th>
+        <td mat-cell *matCellDef="let element">{{ element.tueAm }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="tuePm">
+        <th mat-header-cell *matHeaderCellDef>{{'Tue PM' | translate}}</th>
+        <td mat-cell *matCellDef="let element">{{ element.tuePm }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="wedAm">
+        <th mat-header-cell *matHeaderCellDef>{{'Wed AM' | translate}}</th>
+        <td mat-cell *matCellDef="let element">{{ element.wedAm }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="wedPm">
+        <th mat-header-cell *matHeaderCellDef>{{'Wed PM' | translate}}</th>
+        <td mat-cell *matCellDef="let element">{{ element.wedPm }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="thuAm">
+        <th mat-header-cell *matHeaderCellDef>{{'Thu AM' | translate}}</th>
+        <td mat-cell *matCellDef="let element">{{ element.thuAm }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="thuPm">
+        <th mat-header-cell *matHeaderCellDef>{{'Thu PM' | translate}}</th>
+        <td mat-cell *matCellDef="let element">{{ element.thuPm }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="friAm">
+        <th mat-header-cell *matHeaderCellDef>{{'Fri AM' | translate}}</th>
+        <td mat-cell *matCellDef="let element">{{ element.friAm }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="friPm">
+        <th mat-header-cell *matHeaderCellDef>{{'Fri PM' | translate}}</th>
+        <td mat-cell *matCellDef="let element">{{ element.friPm }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="satAm">
+        <th mat-header-cell *matHeaderCellDef>{{'Sat AM' | translate}}</th>
+        <td mat-cell *matCellDef="let element">{{ element.satAm }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="satPm">
+        <th mat-header-cell *matHeaderCellDef>{{'Sat PM' | translate}}</th>
+        <td mat-cell *matCellDef="let element">{{ element.satPm }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+</div>

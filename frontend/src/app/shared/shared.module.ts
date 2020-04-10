@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
@@ -14,6 +14,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTableModule } from '@angular/material/table';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from '../app-routing.module';
@@ -48,7 +49,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatIconModule,
     MatSelectModule,
     MatCheckboxModule,
+    MatTableModule,
     ReactiveFormsModule,
+    FormsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -76,6 +79,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReactiveFormsModule,
     MatSelectModule,
     MatCardModule,
+    MatTableModule,
+    MatInputModule,
+    MatFormFieldModule,
+    FormsModule,
     CollectibleCardComponent,
   ],
 })

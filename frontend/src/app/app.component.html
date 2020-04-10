@@ -30,6 +30,15 @@
   >
     {{ "Fossils" | translate }}
   </a>
+  <a
+    mat-tab-link
+    [routerLink]="['/turnips']"
+    routerLinkActive
+    #rlaTurnips="routerLinkActive"
+    [active]="rlaTurnips.isActive"
+  >
+    {{ "Turnip Prediction" | translate }}
+  </a>
   <div class="flex-spacer"></div>
   <a mat-tab-link href="https://github.com/Gigiga/acnh-critterpedia" target="BLANK">
     <mat-icon>code</mat-icon>

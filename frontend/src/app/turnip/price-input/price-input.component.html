@@ -1,0 +1,9 @@
+<h3>{{ weekday | translate }}</h3>
+<mat-form-field>
+  <mat-label>{{ "AM" | translate }}</mat-label>
+  <input matInput [value]="value.am" [disabled]="disabled" (input)="changeAm($event.target)" (focus)="this.onTouch()" />
+</mat-form-field>
+<mat-form-field>
+  <mat-label>{{ "PM" | translate }}</mat-label>
+  <input matInput [value]="value.pm" [disabled]="disabled" (input)="changePm($event.target)" (focus)="this.onTouch()" />
+</mat-form-field>

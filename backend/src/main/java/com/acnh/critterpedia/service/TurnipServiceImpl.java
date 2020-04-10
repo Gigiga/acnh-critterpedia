@@ -28,7 +28,6 @@ public class TurnipServiceImpl implements TurnipService {
             for (int basePrice = 90; basePrice <= 110; ++basePrice) {
                 pricePatterns.put(basePrice, generator.generatePatterns(basePrice));
             }
-            System.out.println("Calculated " + pricePatterns.size() + " patterns for " + generator.getPattern());
             patterns.put(generator.getPattern(), pricePatterns);
         }
 
@@ -56,7 +55,7 @@ public class TurnipServiceImpl implements TurnipService {
             Map<Integer, List<TurnipPattern>> calculated = this.patterns.get(pattern);
 
             List<TurnipPattern> possibilities = new ArrayList<>();
-
+    
             for (int price = priceMin; price <= priceMax; ++price) {
                 List<TurnipPattern> calculatedPatterns = calculated.get(price);
                 for (TurnipPattern calculatedPattern : calculatedPatterns) {

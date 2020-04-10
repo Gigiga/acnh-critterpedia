@@ -6,14 +6,15 @@ import { FossilListComponent } from './fossil/fossil-list/fossil-list.component'
 import { FishDetailsComponent } from './fish/fish-details/fish-details.component';
 import { BugDetailsComponent } from './bug/bug-details/bug-details.component';
 import { FossilDetailsComponent } from './fossil/fossil-details/fossil-details.component';
+import { TurnipPredictionComponent } from './turnip/turnip-prediction/turnip-prediction.component';
 
 const routes: Routes = [
   {
     path: 'fish',
     component: FishListComponent,
     data: {
-      shouldReuse: true
-    }
+      shouldReuse: true,
+    },
   },
   {
     path: 'fish/:name',
@@ -23,8 +24,8 @@ const routes: Routes = [
     path: 'bugs',
     component: BugListComponent,
     data: {
-      shouldReuse: true
-    }
+      shouldReuse: true,
+    },
   },
   {
     path: 'bugs/:name',
@@ -34,12 +35,19 @@ const routes: Routes = [
     path: 'fossils',
     component: FossilListComponent,
     data: {
-      shouldReuse: true
-    }
+      shouldReuse: true,
+    },
   },
   {
     path: 'fossils/:name',
     component: FossilDetailsComponent,
+  },
+  {
+    path: 'turnips',
+    component: TurnipPredictionComponent,
+    data: {
+      shouldReuse: true,
+    },
   },
   {
     path: '',
