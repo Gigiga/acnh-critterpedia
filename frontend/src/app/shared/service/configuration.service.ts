@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ConfigurationParameters } from './configuration-parameters.enum';
+import { TurnipCalculationRequest } from '../model/turnipCalculationRequest';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +10,7 @@ export class ConfigurationService {
   southernHemisphere = new BehaviorSubject<boolean>(false);
   collectedCollectibles = new BehaviorSubject<string[]>([]);
   donatedCollectibles = new BehaviorSubject<string[]>([]);
+  turnipRequest = new BehaviorSubject<TurnipCalculationRequest>(null);
 
   constructor() {
     this.southernHemisphere.next(
@@ -24,6 +26,9 @@ export class ConfigurationService {
       JSON.parse(
         localStorage.getItem(ConfigurationParameters.DONATED_COLLECTIBLES)
       ) || []
+    );
+    this.turnipRequest.next(
+      JSON.parse(localStorage.getItem(ConfigurationParameters.TURNIP_REQUEST))
     );
 
     this.southernHemisphere.subscribe((southernHemisphere) =>
@@ -42,6 +47,12 @@ export class ConfigurationService {
       localStorage.setItem(
         ConfigurationParameters.DONATED_COLLECTIBLES,
         JSON.stringify(donatedCollectibles)
+      )
+    );
+    this.turnipRequest.subscribe((turnipRequest) =>
+      localStorage.setItem(
+        ConfigurationParameters.TURNIP_REQUEST,
+        JSON.stringify(turnipRequest)
       )
     );
   }

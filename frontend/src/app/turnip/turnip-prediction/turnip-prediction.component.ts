@@ -1,13 +1,20 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { merge, Subject } from 'rxjs';
-import { debounceTime, finalize, takeUntil, tap } from 'rxjs/operators';
+import {
+  debounceTime,
+  filter,
+  finalize,
+  take,
+  takeUntil,
+  tap,
+} from 'rxjs/operators';
 import { TurnipService } from 'src/app/shared/api/turnip.service';
 import { TurnipCalculationRequest } from 'src/app/shared/model/turnipCalculationRequest';
 import { TurnipPatternMap } from 'src/app/shared/model/turnipPatternMap';
 import { TurnipPrice } from 'src/app/shared/model/turnipPrice';
+import { ConfigurationService } from 'src/app/shared/service/configuration.service';
 
 @Component({
   selector: 'app-turnip-prediction',
@@ -19,9 +26,7 @@ export class TurnipPredictionComponent implements OnInit, OnDestroy {
   loading = false;
   initialized = false;
 
-  dataSource = new MatTableDataSource<any>([]);
-  displayedColumns = [
-    'pattern',
+  private timings = [
     'monAm',
     'monPm',
     'tueAm',
@@ -35,6 +40,9 @@ export class TurnipPredictionComponent implements OnInit, OnDestroy {
     'satAm',
     'satPm',
   ];
+
+  dataSource = new MatTableDataSource<any>([]);
+  displayedColumns = ['pattern', ...this.timings];
 
   basePriceControl = new FormControl();
   firstTimeBuyerControl = new FormControl(false);
@@ -54,12 +62,17 @@ export class TurnipPredictionComponent implements OnInit, OnDestroy {
     this.saturdayPriceControl,
   ];
 
-  constructor(private turnipService: TurnipService) {}
-
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  constructor(
+    private turnipService: TurnipService,
+    private configurationService: ConfigurationService
+  ) {}
 
   ngOnInit(): void {
-    this.dataSource.paginator = this.paginator;
+    this.loadConfig();
+    this.setupForm();
+  }
+
+  private setupForm() {
     merge(
       this.basePriceControl.valueChanges,
       this.firstTimeBuyerControl.valueChanges.pipe(
@@ -73,27 +86,52 @@ export class TurnipPredictionComponent implements OnInit, OnDestroy {
     )
       .pipe(
         tap(() => (this.loading = true)),
-        debounceTime(2000),
-        takeUntil(this.destroyed$)
+        takeUntil(this.destroyed$),
+        debounceTime(2000)
       )
       .subscribe(() => {
-        const request: TurnipCalculationRequest = {
-          basePrice: this.basePriceControl.value,
-          firstTime: this.firstTimeBuyerControl.value,
-          seenPrices: this.formControls.reduce(
-            (prices, fc) =>
-              fc.value
-                ? prices.concat([fc.value.am, fc.value.pm])
-                : prices.concat([null, null]),
-            []
-          ),
-        };
-        this.turnipService
-          .getPatterns(request)
-          .pipe(finalize(() => (this.loading = false, this.initialized = true)))
-          .subscribe((patternmap) => {
-            this.mapPattern(patternmap);
+        this.requestPatterns();
+      });
+  }
+
+  private requestPatterns() {
+    this.loading = true;
+    const request: TurnipCalculationRequest = {
+      basePrice: this.basePriceControl.value,
+      firstTime: this.firstTimeBuyerControl.value,
+      seenPrices: this.formControls.reduce(
+        (prices, fc) =>
+          fc.value
+            ? prices.concat([fc.value.am, fc.value.pm])
+            : prices.concat([null, null]),
+        []
+      ),
+    };
+    this.configurationService.turnipRequest.next(request);
+    this.turnipService
+      .getPatterns(request)
+      .pipe(finalize(() => ((this.loading = false), (this.initialized = true))))
+      .subscribe((patternmap) => {
+        this.mapPattern(patternmap);
+      });
+  }
+
+  private loadConfig() {
+    this.configurationService.turnipRequest
+      .pipe(
+        take(1),
+        filter((request) => request !== null)
+      )
+      .subscribe((request) => {
+        this.firstTimeBuyerControl.setValue(request.firstTime);
+        this.basePriceControl.setValue(request.basePrice);
+        this.formControls.forEach((formControl, index) => {
+          formControl.setValue({
+            am: request.seenPrices[index * 2],
+            pm: request.seenPrices[index * 2 + 1],
           });
+        });
+        this.requestPatterns();
       });
   }
 
@@ -109,26 +147,14 @@ export class TurnipPredictionComponent implements OnInit, OnDestroy {
   private mapPattern(patternMap: TurnipPatternMap) {
     let dataSource = [];
     for (const pattern of Object.keys(patternMap)) {
-      let i = 0;
       dataSource = dataSource.concat(
-        patternMap[pattern].map(
-          (value) => (
-            (i = 0),
-            {
-              pattern,
-              monAm: this.formatPrice(value.prices[i++]),
-              monPm: this.formatPrice(value.prices[i++]),
-              tueAm: this.formatPrice(value.prices[i++]),
-              tuePm: this.formatPrice(value.prices[i++]),
-              wedAm: this.formatPrice(value.prices[i++]),
-              wedPm: this.formatPrice(value.prices[i++]),
-              thuAm: this.formatPrice(value.prices[i++]),
-              thuPm: this.formatPrice(value.prices[i++]),
-              friAm: this.formatPrice(value.prices[i++]),
-              friPm: this.formatPrice(value.prices[i++]),
-              satAm: this.formatPrice(value.prices[i++]),
-              satPm: this.formatPrice(value.prices[i]),
-            }
+        patternMap[pattern].map((value) =>
+          value.prices.reduce(
+            (value, price, index) => ({
+              ...value,
+              [this.timings[index]]: this.formatPrice(price),
+            }),
+            { pattern }
           )
         )
       );
