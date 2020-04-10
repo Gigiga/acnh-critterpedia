@@ -25,6 +25,10 @@
     {
       "name": "Fossil",
       "description": "Information about fossils"
+    },
+    {
+      "name": "Turnips",
+      "description": "Turnip pattern calculation"
     }
   ],
   "paths": {
@@ -285,6 +289,58 @@
           }
         }
       }
+    },
+    "/turnipPattern": {
+      "post": {
+        "tags": [
+          "Turnip"
+        ],
+        "description": "Calculate possible turnip patterns ```Example: http://192.168.99.101:4041/turnipPattern```",
+        "produces": [
+          "application/json",
+          "text/html"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/turnipCalculationRequest"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully calculated the possible turnip patterns",
+            "schema": {
+              "$ref": "#/definitions/turnipPatternMap"
+            }
+          }
+        }
+      }
+    }
+  },
+  "parameters": {
+    "turnipCalculationRequest": {
+      "in": "body",
+      "required": true,
+      "name": "calculationRequest",
+      "description": "Turnip pattern calculation request",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "basePrice": {
+            "type": "integer",
+            "default": null
+          },
+          "firstTime": {
+            "type": "boolean",
+            "default": false
+          },
+          "seenPrices": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -457,6 +513,26 @@
           "example": "2000",
           "type": "integer",
           "description": "Selling price of the fossil"
+        }
+      }
+    },
+    "turnipPrice": {
+      "type": "object",
+      "properties": {
+        "min": {
+          "type": "integer"
+        },
+        "max": {
+          "type": "integer"
+        }
+      }
+    },
+    "turnipPatternMap": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/turnipPrice"
         }
       }
     }
