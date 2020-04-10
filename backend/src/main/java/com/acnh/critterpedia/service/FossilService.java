@@ -11,4 +11,6 @@ public interface FossilService {
     List<Fossil> getFossil();
 
     Fossil getFossil(String name) throws NotFoundException;
+
+    String getImage(String name) throws NotFoundException;
 }

@@ -1,28 +1,35 @@
-<h2>
-  <app-hemisphere-selector></app-hemisphere-selector>
-  {{ "Catch Time" | translate }}
-</h2>
-<h3 class="time" *ngIf="!allDay">
-  <span class="icon-text"
-  ><mat-icon>schedule</mat-icon>
-    <span *ngFor="let date of dates; let i = index">
-      {{ date.startDate | date: "shortTime" }} -
-      {{ date.endDate | date: "shortTime"
-      }}&nbsp;{{ i === dates.length - 1 ? "" : "&" }}&nbsp;
-    </span></span
-  >
-</h3>
-<h3 class="time" *ngIf="allDay">
-  <span class="icon-text"
-    ><mat-icon>schedule</mat-icon>{{ "All day!" | translate }}</span
-  >
-</h3>
-<div class="months">
-  <div
-    *ngFor="let month of monthArray"
-    class="month"
-    [class.active]="catchableMonths.includes(month)"
-  >
-    {{ "MONTHS." + month | translate }}
-  </div>
-</div>
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title>{{ "Catch Time Information" | translate }}</mat-card-title>
+    <mat-card-subtitle
+    >
+      <app-hemisphere-selector></app-hemisphere-selector>
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <h3 class="time" *ngIf="!allDay">
+      <span class="icon-text"
+      ><mat-icon>schedule</mat-icon>
+        <span *ngFor="let date of dates; let i = index">
+          {{ date.startDate | date: "shortTime" }} -
+          {{ date.endDate | date: "shortTime"
+          }}&nbsp;{{ i === dates.length - 1 ? "" : "&" }}&nbsp;
+        </span></span
+      >
+    </h3>
+    <h3 class="time" *ngIf="allDay">
+      <span class="icon-text"
+      ><mat-icon>schedule</mat-icon>{{ "All day!" | translate }}</span
+      >
+    </h3>
+    <div class="months">
+      <div
+        *ngFor="let month of monthArray"
+        class="month"
+        [class.active]="catchableMonths.includes(month)"
+      >
+        {{ "MONTHS." + month | translate }}
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

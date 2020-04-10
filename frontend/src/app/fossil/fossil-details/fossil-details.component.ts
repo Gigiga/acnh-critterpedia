@@ -21,6 +21,9 @@ export class FossilDetailsComponent extends BaseDetailsComponent<Fossil> {
     protected translate: TranslateService
   ) {
     super(route, router, snackBar, translate);
-    this.loadItem = (): Observable<Fossil> => this.fossilService.getFossil(this.name);
+    this.loadItem = (): Observable<Fossil> =>
+      this.fossilService.getFossil(this.name);
+    this.loadImage = (): Observable<string> =>
+      this.fossilService.getImage(this.name);
   }
 }

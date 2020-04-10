@@ -22,6 +22,7 @@
     <mat-option *ngFor="let opt of sortOptions | keyvalue" [value]="opt.key">{{opt.key | translate}}</mat-option>
   </mat-select>
 </mat-form-field>
+<mat-checkbox [formControl]="notCollectedControl">{{'Not collected' | translate}}</mat-checkbox>
 
 <app-loading-spinner *ngIf="loading"></app-loading-spinner>
 

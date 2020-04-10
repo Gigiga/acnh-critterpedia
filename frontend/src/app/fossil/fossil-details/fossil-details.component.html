@@ -1,12 +1,4 @@
 <app-loading-spinner *ngIf="loading"></app-loading-spinner>
 <div *ngIf="!loading && item as fossil">
-  <mat-list>
-    <mat-list-item
-      >{{ "Name" | translate }}: {{ fossil.name | translate }}</mat-list-item
-    >
-    <mat-divider></mat-divider>
-    <mat-list-item
-      ><app-selling-price [price]="fossil.price"></app-selling-price
-    ></mat-list-item>
-  </mat-list>
+  <app-collectible-card [collectible]="fossil" [image]="image"></app-collectible-card>
 </div>

@@ -1,15 +1,16 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subject, Observable, of } from 'rxjs';
-import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { takeUntil, switchMap, finalize } from 'rxjs/operators';
+import { combineLatest, Observable, Subject } from 'rxjs';
+import { finalize, switchMap, takeUntil } from 'rxjs/operators';
 
 @Component({
   template: '',
 })
 export class BaseDetailsComponent<T> implements OnInit, OnDestroy {
   item: T;
+  image: string;
   loading = true;
   protected destroyed$ = new Subject();
   protected name: string;
@@ -28,11 +29,14 @@ export class BaseDetailsComponent<T> implements OnInit, OnDestroy {
         switchMap((params: ParamMap) => {
           this.name = params.get('name');
           this.loading = true;
-          return this.loadItem().pipe(finalize(() => (this.loading = false)));
+          return combineLatest(
+            this.loadItem(),
+            this.loadImage()
+          ).pipe(finalize(() => (this.loading = false)));
         })
       )
       .subscribe(
-        (item) => (this.item = item),
+        ([item, image]) => (this.item = item, this.image = image),
         (error) => {
           const key =
             error.status === 404 ? 'CreatureNotFound' : 'CreatureLoadError';
@@ -52,5 +56,11 @@ export class BaseDetailsComponent<T> implements OnInit, OnDestroy {
     this.destroyed$.complete();
   }
 
-  loadItem: () => Observable<T> = () => {return of({} as T)};
+  loadItem: () => Observable<T> = () => {
+    throw new Error();
+  };
+
+  loadImage: () => Observable<string> = () => {
+    throw new Error();
+  };
 }

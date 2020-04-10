@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { combineLatest, Observable, Subject } from 'rxjs';
 import { finalize, startWith, takeUntil, tap } from 'rxjs/operators';
 import { Collectible } from '../../model/collectible';
+import { ConfigurationService } from '../../service/configuration.service';
 
 @Component({
   selector: 'app-collectible-list',
@@ -21,6 +22,7 @@ export class CollectibleListComponent implements OnInit, OnDestroy {
   sortOptions: {
     [key: string]: (a: Collectible, b: Collectible) => number;
   } = {};
+  notCollectedControl = new FormControl(false);
 
   collectibles: Collectible[] = [];
 
@@ -31,7 +33,7 @@ export class CollectibleListComponent implements OnInit, OnDestroy {
     this.sortOptions[name] = comparator;
   }
 
-  constructor() {
+  constructor(private configurationService: ConfigurationService) {
     this.registerSortFn('Name (Asc)', (a, b) => a.name.localeCompare(b.name));
     this.registerSortFn('Name (Desc)', (a, b) => b.name.localeCompare(a.name));
     this.registerSortFn('Price (Asc)', (a, b) => a.price - b.price);
@@ -45,18 +47,29 @@ export class CollectibleListComponent implements OnInit, OnDestroy {
       this.collectibles$.pipe(
         tap(() => (this.loading = false)),
         finalize(() => (this.loading = false))
+      ),
+      this.configurationService.collectedCollectibles,
+      this.notCollectedControl.valueChanges.pipe(
+        startWith(this.notCollectedControl.value)
       )
     )
       .pipe(takeUntil(this.destroyed$))
-      .subscribe(([filter, sortOpt, collectibles]) => {
-        filter = filter.toUpperCase();
-        this.collectibles = collectibles.filter((collectible) =>
-          collectible.name.toUpperCase().includes(filter)
-        );
-        if (this.sortOptions[sortOpt]) {
-          this.collectibles.sort(this.sortOptions[sortOpt]);
+      .subscribe(
+        ([filter, sortOpt, collectibles, collected, filterNotCollected]) => {
+          filter = filter.toUpperCase();
+          this.collectibles = collectibles.filter((collectible) =>
+            collectible.name.toUpperCase().includes(filter)
+          );
+          if (filterNotCollected) {
+            this.collectibles = this.collectibles.filter(
+              (collectible) => !collected.includes(collectible.name)
+            );
+          }
+          if (this.sortOptions[sortOpt]) {
+            this.collectibles.sort(this.sortOptions[sortOpt]);
+          }
         }
-      });
+      );
   }
 
   ngOnDestroy() {

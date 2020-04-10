@@ -20,4 +20,6 @@ public class Fossil {
     @Column(columnDefinition = "TEXT")
     private String image;
     private int price;
+    @Column(columnDefinition = "TEXT")
+    private String largeImage;
 }

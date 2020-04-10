@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-04-06T17:23:51.744Z")
+
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-04-10T10:14:14.149Z")
 
 @Api(value = "fish", description = "the fish API")
 @RequestMapping(value = "")
@@ -36,5 +37,15 @@ public interface FishApi {
             produces = {"application/json", "text/html"},
             method = RequestMethod.GET)
     ResponseEntity<Fish> fishNameGet(@ApiParam(value = "Name of the fish", required = true) @PathVariable("name") String name);
+
+
+    @ApiOperation(value = "", nickname = "fishNameImageGet", notes = "Fetch fish image with passed name ```Example: http://192.168.99.101:4041/fish/bass/image```", response = String.class, tags = {"Fish",})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully fetched the fish image", response = String.class),
+            @ApiResponse(code = 404, message = "The fish was not found")})
+    @RequestMapping(value = "/fish/{name}/image",
+            produces = {"text/plain", "text/html"},
+            method = RequestMethod.GET)
+    ResponseEntity<String> fishNameImageGet(@ApiParam(value = "Name of the fish", required = true) @PathVariable("name") String name);
 
 }

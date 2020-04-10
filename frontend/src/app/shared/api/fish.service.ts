@@ -20,4 +20,10 @@ export class FishService {
   getFish(name: string): Observable<Fish> {
     return this.httpClient.get(`${this.basePath}${name}`);
   }
+
+  getImage(name: string): Observable<string> {
+    return this.httpClient.get(`${this.basePath}${name}/image`, {
+      responseType: 'text',
+    });
+  }
 }

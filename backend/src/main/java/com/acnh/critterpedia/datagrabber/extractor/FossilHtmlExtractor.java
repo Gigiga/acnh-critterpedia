@@ -1,5 +1,6 @@
 package com.acnh.critterpedia.datagrabber.extractor;
 
+import com.acnh.critterpedia.datagrabber.grabber.HtmlLargeImageGrabber;
 import com.acnh.critterpedia.datagrabber.grabber.HttpImageGrabber;
 import com.acnh.critterpedia.model.Fossil;
 import org.jsoup.Jsoup;
@@ -17,6 +18,9 @@ import java.util.List;
 public class FossilHtmlExtractor implements FossilExtractor {
     @Autowired
     HttpImageGrabber imageGrabber;
+
+    @Autowired
+    HtmlLargeImageGrabber largeImageGrabber;
 
     @Override
     public List<Fossil> extract() {
@@ -43,8 +47,10 @@ public class FossilHtmlExtractor implements FossilExtractor {
             if (cells.size() == 0) continue;
 
             Fossil fossil = new Fossil();
-            fossil.setName(cells.get(0).selectFirst("a").text());
+            Element nameLink = cells.get(0).selectFirst("a");
+            fossil.setName(nameLink.text());
             fossil.setImage(imageGrabber.grab(cells.get(1).selectFirst("a").attr("href")));
+            fossil.setLargeImage(largeImageGrabber.grab(nameLink.attr("abs:href"), fossil.getImage()));
             fossil.setPrice(Integer.parseInt(cells.get(2).text().replaceAll("[^0-9]", "")));
             fossils.add(fossil);
         }

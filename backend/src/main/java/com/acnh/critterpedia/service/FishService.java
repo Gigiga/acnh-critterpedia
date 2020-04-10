@@ -11,4 +11,6 @@ public interface FishService {
     List<Fish> getFish();
 
     Fish getFish(String name) throws NotFoundException;
+
+    String getImage(String name) throws NotFoundException;
 }

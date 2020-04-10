@@ -81,4 +81,16 @@ public class BugServiceImpl implements BugService {
 
         return output;
     }
+
+    @Override
+    public String getImage(String name) throws NotFoundException {
+        Optional<com.acnh.critterpedia.model.Bug> bug = repository.findById(name);
+
+        if (!bug.isPresent()) {
+            throw new NotFoundException(404, "The bug " + name + " was not found");
+        }
+
+        return bug.get().getLargeImage();
+
+    }
 }

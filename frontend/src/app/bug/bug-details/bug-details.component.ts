@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { BugService } from 'src/app/shared/api/bug.service';
 import { BaseDetailsComponent } from 'src/app/shared/components/base-details/base-details.component';
 import { Bug } from 'src/app/shared/model/bug';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-bug-details',
@@ -14,6 +15,8 @@ import { Bug } from 'src/app/shared/model/bug';
 })
 export class BugDetailsComponent extends BaseDetailsComponent<Bug>
   implements OnInit {
+  additionalContent: { title: string; value: string }[] = [];
+
   constructor(
     private bugService: BugService,
     protected route: ActivatedRoute,
@@ -23,7 +26,14 @@ export class BugDetailsComponent extends BaseDetailsComponent<Bug>
   ) {
     super(route, router, snackBar, translate);
     this.loadItem = (): Observable<Bug> => {
-      return this.bugService.getBug(this.name);
+      return this.bugService.getBug(this.name).pipe(tap((bug) => {
+        this.additionalContent = [{
+          title: 'Location',
+          value: `BUG_LOCATIONS.${bug.location}`
+        }]
+      }));
     };
+    this.loadImage = (): Observable<string> =>
+      this.bugService.getImage(this.name);
   }
 }

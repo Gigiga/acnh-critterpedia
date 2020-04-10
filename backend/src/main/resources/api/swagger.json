@@ -82,6 +82,38 @@
         }
       }
     },
+    "/fish/{name}/image": {
+      "get": {
+        "tags": [
+          "Fish"
+        ],
+        "description": "Fetch fish image with passed name ```Example: http://192.168.99.101:4041/fish/bass/image```",
+        "produces": [
+          "text/plain",
+          "text/html"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "type": "string",
+            "description": "Name of the fish"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully fetched the fish image",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "404": {
+            "description": "The fish was not found"
+          }
+        }
+      }
+    },
     "/bug": {
       "get": {
         "tags": [
@@ -136,6 +168,38 @@
         }
       }
     },
+    "/bug/{name}/image": {
+      "get": {
+        "tags": [
+          "Bug"
+        ],
+        "description": "Fetch bug image with passed name ```Example: http://192.168.99.101:4041/bug/tarantula/image```",
+        "produces": [
+          "text/plain",
+          "text/html"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "type": "string",
+            "description": "Name of the bug"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully fetched the bug image",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "404": {
+            "description": "The bug was not found"
+          }
+        }
+      }
+    },
     "/fossil": {
       "get": {
         "tags": [
@@ -182,6 +246,38 @@
             "description": "Successfully fetched a fossil",
             "schema": {
               "$ref": "#/definitions/fossil"
+            }
+          },
+          "404": {
+            "description": "The fossil was not found"
+          }
+        }
+      }
+    },
+    "/fossil/{name}/image": {
+      "get": {
+        "tags": [
+          "Fossil"
+        ],
+        "description": "Fetch fossil image with passed name ```Example: http://192.168.99.101:4041/fossil/trilobite/image```",
+        "produces": [
+          "text/plain",
+          "text/html"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "type": "string",
+            "description": "Name of the fossil"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully fetched the fossil image",
+            "schema": {
+              "type": "string"
             }
           },
           "404": {

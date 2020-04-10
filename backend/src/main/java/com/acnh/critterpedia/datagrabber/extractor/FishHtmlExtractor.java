@@ -1,6 +1,7 @@
 package com.acnh.critterpedia.datagrabber.extractor;
 
 import com.acnh.critterpedia.datagrabber.grabber.HtmlCatchTimeGrabber;
+import com.acnh.critterpedia.datagrabber.grabber.HtmlLargeImageGrabber;
 import com.acnh.critterpedia.datagrabber.grabber.HttpImageGrabber;
 import com.acnh.critterpedia.model.CatchTime;
 import com.acnh.critterpedia.model.Fish;
@@ -24,6 +25,9 @@ public class FishHtmlExtractor implements FishExtractor {
     @Autowired
     HtmlCatchTimeGrabber catchTimeGrabber;
 
+    @Autowired
+    HtmlLargeImageGrabber largeImageGrabber;
+
     @Override
     public List<Fish> extract() {
         List<Fish> allFish = new ArrayList<>();
@@ -37,8 +41,10 @@ public class FishHtmlExtractor implements FishExtractor {
                 if (tableData.size() == 0) continue;
 
                 Fish fish = new Fish();
-                fish.setName(tableData.get(0).selectFirst("a").text());
+                Element nameLink = tableData.get(0).selectFirst("a");
+                fish.setName(nameLink.text());
                 fish.setImage(imageGrabber.grab(tableData.get(1).selectFirst("a").attr("href")));
+                fish.setLargeImage(largeImageGrabber.grab(nameLink.attr("abs:href"), fish.getImage()));
                 fish.setPrice(Integer.parseInt(tableData.get(2).text()));
                 fish.setLocation(translateLocation(tableData.get(3).text()));
                 fish.setShadowSize(translateShadowSize(tableData.get(4).text()));

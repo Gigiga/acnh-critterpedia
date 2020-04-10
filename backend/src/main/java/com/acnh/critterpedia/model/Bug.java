@@ -22,6 +22,8 @@ public class Bug {
     private LocationEnum location;
     @OneToOne(cascade = CascadeType.ALL)
     private CatchTime catchTime;
+    @Column(columnDefinition = "TEXT")
+    private String largeImage;
 
     @Getter
     public enum LocationEnum {

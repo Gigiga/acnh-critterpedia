@@ -1,6 +1,7 @@
 package com.acnh.critterpedia.datagrabber.extractor;
 
 import com.acnh.critterpedia.datagrabber.grabber.HtmlCatchTimeGrabber;
+import com.acnh.critterpedia.datagrabber.grabber.HtmlLargeImageGrabber;
 import com.acnh.critterpedia.datagrabber.grabber.HttpImageGrabber;
 import com.acnh.critterpedia.model.Bug;
 import com.acnh.critterpedia.model.CatchTime;
@@ -23,6 +24,9 @@ public class BugHtmlExtractor implements BugExtractor {
     @Autowired
     HtmlCatchTimeGrabber catchTimeGrabber;
 
+    @Autowired
+    HtmlLargeImageGrabber largeImageGrabber;
+
     @Override
     public List<Bug> extract() {
         List<Bug> bugs = new ArrayList<>();
@@ -36,8 +40,10 @@ public class BugHtmlExtractor implements BugExtractor {
                 if (tableData.size() == 0) continue;
 
                 Bug bug = new Bug();
-                bug.setName(tableData.get(0).selectFirst("a").text());
+                Element nameLink = tableData.get(0).selectFirst("a");
+                bug.setName(nameLink.text());
                 bug.setImage(imageGrabber.grab(tableData.get(1).selectFirst("a").attr("href")));
+                bug.setLargeImage(largeImageGrabber.grab(nameLink.attr("abs:href"), bug.getImage()));
                 bug.setPrice(Integer.parseInt(tableData.get(2).text()));
                 bug.setLocation(translateLocation(tableData.get(3).text()));
 

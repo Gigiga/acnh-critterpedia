@@ -19,4 +19,10 @@ export class FossilService {
   getFossil(name: string): Observable<Fossil> {
     return this.httpClient.get(`${this.basePath}${name}`);
   }
+
+  getImage(name: string): Observable<string> {
+    return this.httpClient.get(`${this.basePath}${name}/image`, {
+      responseType: 'text',
+    });
+  }
 }

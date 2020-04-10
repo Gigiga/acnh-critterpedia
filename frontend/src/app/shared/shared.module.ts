@@ -24,13 +24,14 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
 import { SellingPriceComponent } from './components/selling-price/selling-price.component';
 import { MatIconModule } from '@angular/material/icon';
 import { BaseDetailsComponent } from './components/base-details/base-details.component';
+import { CollectibleCardComponent } from './components/collectible-card/collectible-card.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
 
 @NgModule({
-  declarations: [CollectibleListComponent, CatchTimeDetailsComponent, HemisphereSelectorComponent, SellingPriceComponent, LoadingSpinnerComponent, BaseDetailsComponent],
+  declarations: [CollectibleListComponent, CatchTimeDetailsComponent, HemisphereSelectorComponent, SellingPriceComponent, LoadingSpinnerComponent, BaseDetailsComponent, CollectibleCardComponent],
   imports: [
     AppRoutingModule,
     CommonModule,
@@ -74,6 +75,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatCheckboxModule,
     ReactiveFormsModule,
     MatSelectModule,
+    MatCardModule,
+    CollectibleCardComponent,
   ],
 })
 export class SharedModule {}

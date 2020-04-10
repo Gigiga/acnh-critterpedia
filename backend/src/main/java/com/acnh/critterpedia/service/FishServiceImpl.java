@@ -82,4 +82,15 @@ public class FishServiceImpl implements FishService {
 
         return output;
     }
+
+    @Override
+    public String getImage(String name) throws NotFoundException {
+        Optional<com.acnh.critterpedia.model.Fish> fish = repository.findById(name);
+
+        if (!fish.isPresent()) {
+            throw new NotFoundException(404, "The fish " + name + " was not found");
+        }
+
+        return fish.get().getLargeImage();
+    }
 }

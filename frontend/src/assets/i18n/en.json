@@ -26,6 +26,10 @@
   "Price (Asc)": "Price (Asc)",
   "Price (Desc)": "Price (Desc)",
   "Currently available only": "Currently available only",
+  "Catch Time Information": "Catch Time Information",
+  "Collected": "Collected",
+  "Donated": "Donated",
+  "Not collected": "Not collected",
   "BUG_LOCATIONS": {
     "FLYING": "Flying",
     "FLYING_BY_HYBRID_FLOWERS": "Flying by hybrid flowers",

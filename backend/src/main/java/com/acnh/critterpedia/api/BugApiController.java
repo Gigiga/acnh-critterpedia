@@ -57,4 +57,18 @@ public class BugApiController implements BugApi {
         return new ResponseEntity<Bug>(HttpStatus.NOT_IMPLEMENTED);
     }
 
+    @Override
+    public ResponseEntity<String> bugNameImageGet(@ApiParam(value = "Name of the bug", required = true) @PathVariable("name") String name) {
+        String accept = request.getHeader("Accept");
+        if (accept != null && accept.contains("text/plain")) {
+            try {
+                return new ResponseEntity<String>(service.getImage(name), HttpStatus.ACCEPTED);
+            } catch (NotFoundException e) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }
+
+        return new ResponseEntity<String>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
 }

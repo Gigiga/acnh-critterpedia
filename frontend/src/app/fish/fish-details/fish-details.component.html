@@ -1,23 +1,6 @@
 <app-loading-spinner *ngIf="loading"></app-loading-spinner>
-<div *ngIf="!loading && item as fish">
-  <mat-list>
-    <mat-list-item
-      >{{ "Name" | translate }}: {{ fish.name | translate }}</mat-list-item
-    >
-    <mat-divider></mat-divider>
-    <mat-list-item
-      ><app-selling-price [price]="fish.price"></app-selling-price
-    ></mat-list-item>
-    <mat-divider></mat-divider>
-    <mat-list-item
-      >{{ "Location" | translate }}:
-      {{ "FISH_LOCATIONS." + fish.location | translate }}</mat-list-item
-    >
-    <mat-divider></mat-divider>
-    <mat-list-item
-      >{{ "Shadow Size" | translate }}:
-      {{ "FISH_SHADOW_SIZES." + fish.shadowSize | translate }}</mat-list-item
-    >
-  </mat-list>
+<div *ngIf="!loading && item as fish" class="details">
+  <app-collectible-card [collectible]="fish" [image]="image"
+                        [additionalContent]="additionalContent"></app-collectible-card>
   <app-catch-time-details [catchTime]="fish.catchTime"></app-catch-time-details>
 </div>

@@ -46,4 +46,15 @@ public class FossilServiceImpl implements FossilService {
 
         return output;
     }
+
+    @Override
+    public String getImage(String name) throws NotFoundException {
+        Optional<com.acnh.critterpedia.model.Fossil> fossil = repository.findById(name);
+
+        if (!fossil.isPresent()) {
+            throw new NotFoundException(404, "The fossil " + name + " was not found");
+        }
+
+        return fossil.get().getLargeImage();
+    }
 }
