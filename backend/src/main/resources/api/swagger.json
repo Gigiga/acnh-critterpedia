@@ -527,13 +527,30 @@
         }
       }
     },
+    "turnipPattern": {
+      "type": "object",
+      "properties": {
+        "prices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/turnipPrice"
+          }
+        },
+        "basePrice": {
+          "type": "integer"
+        }
+      }
+    },
+    "turnipPatterns": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/turnipPattern"
+      }
+    },
     "turnipPatternMap": {
       "type": "object",
       "additionalProperties": {
-        "type": "array",
-        "items": {
-          "$ref": "#/definitions/turnipPrice"
-        }
+        "$ref": "#/definitions/turnipPatterns"
       }
     }
   }

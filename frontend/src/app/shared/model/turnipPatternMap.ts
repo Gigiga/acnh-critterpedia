@@ -1,3 +1,3 @@
-import { TurnipPrice } from './turnipPrice';
+import { TurnipPattern } from './turnipPattern';
 
-export type TurnipPatternMap = {[key: string]: Array<{prices: Array<TurnipPrice>}>};
+export type TurnipPatternMap = {[key: string]: Array<TurnipPattern>};

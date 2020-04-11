@@ -15,6 +15,7 @@ import { TurnipCalculationRequest } from 'src/app/shared/model/turnipCalculation
 import { TurnipPatternMap } from 'src/app/shared/model/turnipPatternMap';
 import { TurnipPrice } from 'src/app/shared/model/turnipPrice';
 import { ConfigurationService } from 'src/app/shared/service/configuration.service';
+import { TurnipPatterns } from 'src/app/shared/model/turnip-patterns.enum';
 
 @Component({
   selector: 'app-turnip-prediction',
@@ -41,8 +42,39 @@ export class TurnipPredictionComponent implements OnInit, OnDestroy {
     'satPm',
   ];
 
+  TurnipPatterns = TurnipPatterns;
+
+  patternProbabilities = {
+    [TurnipPatterns.FLUCTUATING]: {
+      [TurnipPatterns.FLUCTUATING]: 20,
+      [TurnipPatterns.HIGH_SPIKE]: 30,
+      [TurnipPatterns.DECREASING]: 15,
+      [TurnipPatterns.SPIKE]: 35,
+    },
+    [TurnipPatterns.HIGH_SPIKE]: {
+      [TurnipPatterns.FLUCTUATING]: 50,
+      [TurnipPatterns.HIGH_SPIKE]: 5,
+      [TurnipPatterns.DECREASING]: 20,
+      [TurnipPatterns.SPIKE]: 25,
+    },
+    [TurnipPatterns.DECREASING]: {
+      [TurnipPatterns.FLUCTUATING]: 25,
+      [TurnipPatterns.HIGH_SPIKE]: 45,
+      [TurnipPatterns.DECREASING]: 5,
+      [TurnipPatterns.SPIKE]: 25,
+    },
+    [TurnipPatterns.SPIKE]: {
+      [TurnipPatterns.FLUCTUATING]: 45,
+      [TurnipPatterns.HIGH_SPIKE]: 25,
+      [TurnipPatterns.DECREASING]: 15,
+      [TurnipPatterns.SPIKE]: 15,
+    },
+  };
+
+  probabilityDataSource = [];
+  probabilityColumns = ['pattern', 'probability'];
   dataSource = new MatTableDataSource<any>([]);
-  displayedColumns = ['pattern', ...this.timings];
+  displayedColumns = ['pattern', 'sun', ...this.timings];
 
   basePriceControl = new FormControl();
   firstTimeBuyerControl = new FormControl(false);
@@ -52,6 +84,7 @@ export class TurnipPredictionComponent implements OnInit, OnDestroy {
   thursdayPriceControl = new FormControl();
   fridayPriceControl = new FormControl();
   saturdayPriceControl = new FormControl();
+  lastPatternControl = new FormControl();
 
   formControls = [
     this.mondayPriceControl,
@@ -92,6 +125,18 @@ export class TurnipPredictionComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.requestPatterns();
       });
+
+    this.lastPatternControl.valueChanges
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(
+        (pattern) =>
+          (this.probabilityDataSource = Object.keys(
+            this.patternProbabilities[pattern]
+          ).map((value) => ({
+            pattern: value,
+            probability: this.patternProbabilities[pattern][value],
+          })))
+      );
   }
 
   private requestPatterns() {
@@ -112,7 +157,7 @@ export class TurnipPredictionComponent implements OnInit, OnDestroy {
       .getPatterns(request)
       .pipe(finalize(() => ((this.loading = false), (this.initialized = true))))
       .subscribe((patternmap) => {
-        this.mapPattern(patternmap);
+        this.mapPattern(request, patternmap);
       });
   }
 
@@ -124,6 +169,9 @@ export class TurnipPredictionComponent implements OnInit, OnDestroy {
       )
       .subscribe((request) => {
         this.firstTimeBuyerControl.setValue(request.firstTime);
+        if (request.firstTime) {
+          this.basePriceControl.disable();
+        }
         this.basePriceControl.setValue(request.basePrice);
         this.formControls.forEach((formControl, index) => {
           formControl.setValue({
@@ -140,11 +188,24 @@ export class TurnipPredictionComponent implements OnInit, OnDestroy {
     this.destroyed$.complete();
   }
 
-  private formatPrice(turnipPrice: TurnipPrice) {
-    return `${turnipPrice.min}-${turnipPrice.max}`;
+  private formatPrice(turnipPrice: TurnipPrice, seenPrice: number): string {
+    let text;
+    if (turnipPrice.min === turnipPrice.max) {
+      text = `${turnipPrice.min}`;
+    } else {
+      text = `${turnipPrice.min}-${turnipPrice.max}`;
+    }
+
+    if (seenPrice) {
+      return `${seenPrice} (${text})`;
+    }
+    return text;
   }
 
-  private mapPattern(patternMap: TurnipPatternMap) {
+  private mapPattern(
+    request: TurnipCalculationRequest,
+    patternMap: TurnipPatternMap
+  ) {
     let dataSource = [];
     for (const pattern of Object.keys(patternMap)) {
       dataSource = dataSource.concat(
@@ -152,9 +213,12 @@ export class TurnipPredictionComponent implements OnInit, OnDestroy {
           value.prices.reduce(
             (value, price, index) => ({
               ...value,
-              [this.timings[index]]: this.formatPrice(price),
+              [this.timings[index]]: this.formatPrice(
+                price,
+                request.seenPrices[index]
+              ),
             }),
-            { pattern }
+            { pattern, sun: value.basePrice }
           )
         )
       );

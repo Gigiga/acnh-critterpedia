@@ -1,20 +1,20 @@
 package io.swagger.model;
 
 import java.util.Objects;
-import io.swagger.model.TurnipPatterns;
-import java.util.HashMap;
-import java.util.Map;
+import io.swagger.model.TurnipPattern;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * TurnipPatternMap
+ * TurnipPatterns
  */
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-04-11T10:47:13.120Z")
 
-public class TurnipPatternMap extends HashMap<String, TurnipPatterns>  {
+public class TurnipPatterns extends ArrayList<TurnipPattern>  {
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -35,7 +35,7 @@ public class TurnipPatternMap extends HashMap<String, TurnipPatterns>  {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class TurnipPatternMap {\n");
+    sb.append("class TurnipPatterns {\n");
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
     sb.append("}");
     return sb.toString();
