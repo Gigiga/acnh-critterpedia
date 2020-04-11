@@ -223,7 +223,6 @@ export class TurnipPredictionComponent implements OnInit, OnDestroy {
         )
       );
     }
-    console.log(this.dataSource);
     this.dataSource.data = dataSource;
   }
 }
