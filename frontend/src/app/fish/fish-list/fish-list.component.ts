@@ -6,6 +6,7 @@ import { FishService } from 'src/app/shared/api/fish.service';
 import { seasonFilter } from 'src/app/shared/filters/season.filter';
 import { Fish } from 'src/app/shared/model/fish';
 import { ConfigurationService } from 'src/app/shared/service/configuration.service';
+import { timeFilter } from 'src/app/shared/filters/time.filter';
 
 @Component({
   selector: 'app-fish-list',
@@ -18,6 +19,7 @@ export class FishListComponent implements OnInit, OnDestroy {
   locations = Object.values(Fish.LocationsEnum);
 
   seasonOnlyControl = new FormControl(false);
+  timeOnlyControl = new FormControl(false);
   locationControl = new FormControl([]);
 
   constructor(
@@ -30,23 +32,30 @@ export class FishListComponent implements OnInit, OnDestroy {
       this.locationControl.valueChanges.pipe(
         startWith(this.locationControl.value)
       ),
-
       this.seasonOnlyControl.valueChanges.pipe(
         startWith(this.seasonOnlyControl.value)
+      ),
+      this.timeOnlyControl.valueChanges.pipe(
+        startWith(this.timeOnlyControl.value)
       ),
       this.configurationService.southernHemisphere,
       this.fishService.getAllFish()
     )
       .pipe(takeUntil(this.destroyed$))
-      .subscribe(([locations, seasonOnly, southernHemisphere, fish]) => {
-        if (locations.length) {
-          fish = fish.filter((fish) => locations.includes(fish.location));
+      .subscribe(
+        ([locations, seasonOnly, timeOnly, southernHemisphere, fish]) => {
+          if (locations.length) {
+            fish = fish.filter((fish) => locations.includes(fish.location));
+          }
+          if (seasonOnly) {
+            fish = seasonFilter(fish, southernHemisphere);
+          }
+          if (timeOnly) {
+            fish = timeFilter(fish);
+          }
+          this.fish$.next(fish);
         }
-        if (seasonOnly) {
-          fish = seasonFilter(fish, southernHemisphere);
-        }
-        this.fish$.next(fish);
-      });
+      );
   }
 
   ngOnDestroy() {

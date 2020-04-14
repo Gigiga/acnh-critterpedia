@@ -1,5 +1,5 @@
 import { Creature } from '../model/creature';
-import { Months, Month } from '../model/months';
+import { Months } from '../model/months';
 
 export const seasonFilter = (
   creatures: Creature[],

@@ -8,7 +8,10 @@
     </mat-select>
   </mat-form-field>
   <mat-checkbox [formControl]="seasonOnlyControl">{{
-    "Currently available only" | translate
+    "Current Season" | translate
+  }}</mat-checkbox>
+  <mat-checkbox [formControl]="timeOnlyControl">{{
+    "Current Time" | translate
   }}</mat-checkbox>
   <app-hemisphere-selector></app-hemisphere-selector>
 </div>
