@@ -80,6 +80,8 @@ public class FishHtmlExtractor implements FishExtractor {
                 return Fish.LocationEnum.SEA;
             case "Pier":
                 return Fish.LocationEnum.PIER;
+            case "Sea (while raining)":
+                return Fish.LocationEnum.SEA_RAINING;
         }
         throw new RuntimeException("Invalid location " + text);
     }
