@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ConfigurationParameters } from './configuration-parameters.enum';
 import { TurnipCalculationRequest } from '../model/turnipCalculationRequest';
+import { skip } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -17,16 +18,8 @@ export class ConfigurationService {
       localStorage.getItem(ConfigurationParameters.SOUTHERN_HEMISPHERE) ===
         'true'
     );
-    this.collectedCollectibles.next(
-      JSON.parse(
-        localStorage.getItem(ConfigurationParameters.COLLECTED_COLLECTIBLES)
-      ) || []
-    );
-    this.donatedCollectibles.next(
-      JSON.parse(
-        localStorage.getItem(ConfigurationParameters.DONATED_COLLECTIBLES)
-      ) || []
-    );
+    this.collectedCollectibles.next(this.loadCollected());
+    this.donatedCollectibles.next(this.loadDonated());
     this.turnipRequest.next(
       JSON.parse(localStorage.getItem(ConfigurationParameters.TURNIP_REQUEST))
     );
@@ -37,13 +30,13 @@ export class ConfigurationService {
         String(southernHemisphere)
       )
     );
-    this.collectedCollectibles.subscribe((collectedCollectibles) =>
+    this.collectedCollectibles.pipe(skip(1)).subscribe((collectedCollectibles) =>
       localStorage.setItem(
         ConfigurationParameters.COLLECTED_COLLECTIBLES,
         JSON.stringify(collectedCollectibles)
       )
     );
-    this.donatedCollectibles.subscribe((donatedCollectibles) =>
+    this.donatedCollectibles.pipe(skip(1)).subscribe((donatedCollectibles) =>
       localStorage.setItem(
         ConfigurationParameters.DONATED_COLLECTIBLES,
         JSON.stringify(donatedCollectibles)
@@ -57,30 +50,50 @@ export class ConfigurationService {
     );
   }
 
+  private loadCollected(): string[] {
+    return (
+      JSON.parse(
+        localStorage.getItem(ConfigurationParameters.COLLECTED_COLLECTIBLES)
+      ) || []
+    );
+  }
+
+  private loadDonated(): string[] {
+    return (
+      JSON.parse(
+        localStorage.getItem(ConfigurationParameters.DONATED_COLLECTIBLES)
+      ) || []
+    );
+  }
+
   addCollected(name: string) {
-    if (!this.collectedCollectibles.value.includes(name)) {
+    const collected = this.loadCollected();
+    if (!collected.includes(name)) {
       this.collectedCollectibles.next([
-        ...this.collectedCollectibles.value,
+        ...collected,
         name,
       ]);
     }
   }
 
   removeCollected(name: string) {
+    const collected = this.loadCollected();
     this.collectedCollectibles.next(
-      this.collectedCollectibles.value.filter((n) => n !== name)
+      collected.filter((n) => n !== name)
     );
   }
 
   addDonated(name: string) {
-    if (!this.donatedCollectibles.value.includes(name)) {
-      this.donatedCollectibles.next([...this.donatedCollectibles.value, name]);
+    const donated = this.loadDonated();
+    if (!donated.includes(name)) {
+      this.donatedCollectibles.next([...donated, name]);
     }
   }
 
   removeDonated(name: string) {
+    const donated = this.loadDonated();
     this.donatedCollectibles.next(
-      this.donatedCollectibles.value.filter((n) => n !== name)
+      donated.filter((n) => n !== name)
     );
   }
 }
