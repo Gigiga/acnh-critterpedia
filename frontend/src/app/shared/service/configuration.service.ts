@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ConfigurationParameters } from './configuration-parameters.enum';
 import { TurnipCalculationRequest } from '../model/turnipCalculationRequest';
 import { skip } from 'rxjs/operators';
+import { TurnipPatterns } from '../model/turnip-patterns.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,7 @@ export class ConfigurationService {
   collectedCollectibles = new BehaviorSubject<string[]>([]);
   donatedCollectibles = new BehaviorSubject<string[]>([]);
   turnipRequest = new BehaviorSubject<TurnipCalculationRequest>(null);
+  lastTurnipPattern = new BehaviorSubject<TurnipPatterns>(null);
 
   constructor() {
     this.southernHemisphere.next(
@@ -23,6 +25,11 @@ export class ConfigurationService {
     this.turnipRequest.next(
       JSON.parse(localStorage.getItem(ConfigurationParameters.TURNIP_REQUEST))
     );
+    this.lastTurnipPattern.next(
+      JSON.parse(localStorage.getItem(
+        ConfigurationParameters.LAST_TURNIP_PATTERN
+      ))
+    );
 
     this.southernHemisphere.subscribe((southernHemisphere) =>
       localStorage.setItem(
@@ -30,24 +37,38 @@ export class ConfigurationService {
         String(southernHemisphere)
       )
     );
-    this.collectedCollectibles.pipe(skip(1)).subscribe((collectedCollectibles) =>
-      localStorage.setItem(
-        ConfigurationParameters.COLLECTED_COLLECTIBLES,
-        JSON.stringify(collectedCollectibles)
-      )
-    );
-    this.donatedCollectibles.pipe(skip(1)).subscribe((donatedCollectibles) =>
-      localStorage.setItem(
-        ConfigurationParameters.DONATED_COLLECTIBLES,
-        JSON.stringify(donatedCollectibles)
-      )
-    );
-    this.turnipRequest.subscribe((turnipRequest) =>
-      localStorage.setItem(
-        ConfigurationParameters.TURNIP_REQUEST,
-        JSON.stringify(turnipRequest)
-      )
-    );
+    this.collectedCollectibles
+      .pipe(skip(1))
+      .subscribe((collectedCollectibles) =>
+        localStorage.setItem(
+          ConfigurationParameters.COLLECTED_COLLECTIBLES,
+          JSON.stringify(collectedCollectibles)
+        )
+      );
+    this.donatedCollectibles
+      .pipe(skip(1))
+      .subscribe((donatedCollectibles) =>
+        localStorage.setItem(
+          ConfigurationParameters.DONATED_COLLECTIBLES,
+          JSON.stringify(donatedCollectibles)
+        )
+      );
+    this.turnipRequest
+      .pipe(skip(1))
+      .subscribe((turnipRequest) =>
+        localStorage.setItem(
+          ConfigurationParameters.TURNIP_REQUEST,
+          JSON.stringify(turnipRequest)
+        )
+      );
+    this.lastTurnipPattern
+      .pipe(skip(1))
+      .subscribe((lastPattern) =>
+        localStorage.setItem(
+          ConfigurationParameters.LAST_TURNIP_PATTERN,
+          JSON.stringify(lastPattern)
+        )
+      );
   }
 
   private loadCollected(): string[] {
@@ -69,18 +90,13 @@ export class ConfigurationService {
   addCollected(name: string) {
     const collected = this.loadCollected();
     if (!collected.includes(name)) {
-      this.collectedCollectibles.next([
-        ...collected,
-        name,
-      ]);
+      this.collectedCollectibles.next([...collected, name]);
     }
   }
 
   removeCollected(name: string) {
     const collected = this.loadCollected();
-    this.collectedCollectibles.next(
-      collected.filter((n) => n !== name)
-    );
+    this.collectedCollectibles.next(collected.filter((n) => n !== name));
   }
 
   addDonated(name: string) {
@@ -92,8 +108,6 @@ export class ConfigurationService {
 
   removeDonated(name: string) {
     const donated = this.loadDonated();
-    this.donatedCollectibles.next(
-      donated.filter((n) => n !== name)
-    );
+    this.donatedCollectibles.next(donated.filter((n) => n !== name));
   }
 }

@@ -1,21 +1,22 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material/table';
-import { merge, Subject } from 'rxjs';
+import { combineLatest, merge, Observable, Subject } from 'rxjs';
 import {
   debounceTime,
   filter,
   finalize,
+  flatMap,
+  startWith,
   take,
   takeUntil,
   tap,
 } from 'rxjs/operators';
 import { TurnipService } from 'src/app/shared/api/turnip.service';
+import { TurnipPatterns } from 'src/app/shared/model/turnip-patterns.enum';
 import { TurnipCalculationRequest } from 'src/app/shared/model/turnipCalculationRequest';
 import { TurnipPatternMap } from 'src/app/shared/model/turnipPatternMap';
 import { TurnipPrice } from 'src/app/shared/model/turnipPrice';
 import { ConfigurationService } from 'src/app/shared/service/configuration.service';
-import { TurnipPatterns } from 'src/app/shared/model/turnip-patterns.enum';
 
 @Component({
   selector: 'app-turnip-prediction',
@@ -24,6 +25,8 @@ import { TurnipPatterns } from 'src/app/shared/model/turnip-patterns.enum';
 })
 export class TurnipPredictionComponent implements OnInit, OnDestroy {
   private destroyed$ = new Subject();
+  private request: TurnipCalculationRequest;
+
   loading = false;
   initialized = false;
 
@@ -44,7 +47,7 @@ export class TurnipPredictionComponent implements OnInit, OnDestroy {
 
   TurnipPatterns = TurnipPatterns;
 
-  patternProbabilities = {
+  PATTERN_PROBABILITIES = {
     [TurnipPatterns.FLUCTUATING]: {
       [TurnipPatterns.FLUCTUATING]: 20,
       [TurnipPatterns.HIGH_SPIKE]: 30,
@@ -73,8 +76,15 @@ export class TurnipPredictionComponent implements OnInit, OnDestroy {
 
   probabilityDataSource = [];
   probabilityColumns = ['pattern', 'probability'];
-  dataSource = new MatTableDataSource<any>([]);
-  displayedColumns = ['pattern', 'sun', ...this.timings];
+  patternDataSource = [];
+  patternColumns = [
+    'pattern',
+    'probability',
+    'sun',
+    ...this.timings,
+    'guaranteedMin',
+    'potentialMax',
+  ];
 
   basePriceControl = new FormControl();
   firstTimeBuyerControl = new FormControl(false);
@@ -101,12 +111,12 @@ export class TurnipPredictionComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.loadConfig();
     this.setupForm();
+    this.loadConfig();
   }
 
   private setupForm() {
-    merge(
+    const patternMap$ = merge(
       this.basePriceControl.valueChanges,
       this.firstTimeBuyerControl.valueChanges.pipe(
         tap((checked) =>
@@ -116,49 +126,46 @@ export class TurnipPredictionComponent implements OnInit, OnDestroy {
         )
       ),
       ...this.formControls.map((fc) => fc.valueChanges)
-    )
-      .pipe(
-        tap(() => (this.loading = true)),
-        takeUntil(this.destroyed$),
-        debounceTime(2000)
-      )
-      .subscribe(() => {
-        this.requestPatterns();
-      });
+    ).pipe(
+      tap(() => (this.loading = true)),
+      debounceTime(2000),
+      flatMap(() => this.requestPatterns()),
+      startWith(null)
+    );
 
-    this.lastPatternControl.valueChanges
+    const lastPattern$ = this.lastPatternControl.valueChanges;
+
+    combineLatest(patternMap$, lastPattern$)
       .pipe(takeUntil(this.destroyed$))
-      .subscribe(
-        (pattern) =>
-          (this.probabilityDataSource = Object.keys(
-            this.patternProbabilities[pattern]
-          ).map((value) => ({
-            pattern: value,
-            probability: this.patternProbabilities[pattern][value],
-          })))
-      );
+      .subscribe(([patternMap, lastPattern]) => {
+        const patternProbabilities = this.mapProbabilities(
+          patternMap,
+          lastPattern
+        );
+        if (patternMap) {
+          this.mapPattern(this.request, patternMap, patternProbabilities);
+        }
+      });
   }
 
-  private requestPatterns() {
-    this.loading = true;
-    const request: TurnipCalculationRequest = {
+  private requestPatterns(): Observable<TurnipPatternMap> {
+    this.request = {
       basePrice: this.basePriceControl.value,
       firstTime: this.firstTimeBuyerControl.value,
-      seenPrices: this.formControls.reduce(
-        (prices, fc) =>
+      seenPrices: this.formControls.flatMap(
+        (fc) =>
           fc.value
-            ? prices.concat([fc.value.am, fc.value.pm])
-            : prices.concat([null, null]),
+            ? [fc.value.am, fc.value.pm]
+            : [null, null],
         []
       ),
     };
-    this.configurationService.turnipRequest.next(request);
-    this.turnipService
-      .getPatterns(request)
-      .pipe(finalize(() => ((this.loading = false), (this.initialized = true))))
-      .subscribe((patternmap) => {
-        this.mapPattern(request, patternmap);
-      });
+    this.configurationService.turnipRequest.next(this.request);
+    return this.turnipService
+      .getPatterns(this.request)
+      .pipe(
+        finalize(() => ((this.loading = false), (this.initialized = true)))
+      );
   }
 
   private loadConfig() {
@@ -169,9 +176,6 @@ export class TurnipPredictionComponent implements OnInit, OnDestroy {
       )
       .subscribe((request) => {
         this.firstTimeBuyerControl.setValue(request.firstTime);
-        if (request.firstTime) {
-          this.basePriceControl.disable();
-        }
         this.basePriceControl.setValue(request.basePrice);
         this.formControls.forEach((formControl, index) => {
           formControl.setValue({
@@ -179,8 +183,13 @@ export class TurnipPredictionComponent implements OnInit, OnDestroy {
             pm: request.seenPrices[index * 2 + 1],
           });
         });
-        this.requestPatterns();
       });
+
+    this.configurationService.lastTurnipPattern
+      .pipe(take(1))
+      .subscribe((lastPattern) =>
+        this.lastPatternControl.setValue(lastPattern)
+      );
   }
 
   ngOnDestroy() {
@@ -202,13 +211,54 @@ export class TurnipPredictionComponent implements OnInit, OnDestroy {
     return text;
   }
 
+  private mapProbabilities(
+    patternMap: TurnipPatternMap,
+    lastPattern: TurnipPatterns
+  ): { [key: string]: number } {
+    this.configurationService.lastTurnipPattern.next(lastPattern);
+    if (lastPattern) {
+      if (patternMap) {
+        const patternProbabilities = this.PATTERN_PROBABILITIES[lastPattern];
+        const maxPercent = Object.keys(patternMap).reduce(
+          (percent, pattern) => percent + patternProbabilities[pattern],
+          0
+        );
+        this.probabilityDataSource = Object.keys(patternMap).map((pattern) => ({
+          pattern,
+          probability: patternProbabilities[pattern] / maxPercent,
+        }));
+        return Object.keys(patternMap).reduce(
+          (probabilities, pattern) => ({
+            ...probabilities,
+            [pattern]:
+              patternProbabilities[pattern] /
+              patternMap[pattern].length /
+              maxPercent,
+          }),
+          {}
+        );
+      } else {
+        this.probabilityDataSource = Object.keys(
+          this.PATTERN_PROBABILITIES[lastPattern]
+        ).map((value) => ({
+          pattern: value,
+          probability: this.PATTERN_PROBABILITIES[lastPattern][value] / 100,
+        }));
+      }
+    } else {
+      this.probabilityDataSource = [];
+    }
+    return {};
+  }
+
   private mapPattern(
     request: TurnipCalculationRequest,
-    patternMap: TurnipPatternMap
+    patternMap: TurnipPatternMap,
+    patternProbabilities
   ) {
-    let dataSource = [];
+    let patternDataSource = [];
     for (const pattern of Object.keys(patternMap)) {
-      dataSource = dataSource.concat(
+      patternDataSource = patternDataSource.concat(
         patternMap[pattern].map((value) =>
           value.prices.reduce(
             (value, price, index) => ({
@@ -217,12 +267,24 @@ export class TurnipPredictionComponent implements OnInit, OnDestroy {
                 price,
                 request.seenPrices[index]
               ),
+              guaranteedMin: Math.max(
+                value.guaranteedMin,
+                price.min,
+                request.seenPrices[index] || 0
+              ),
+              potentialMax: Math.max(value.potentialMax, price.max),
             }),
-            { pattern, sun: value.basePrice }
+            {
+              pattern,
+              sun: value.basePrice,
+              guaranteedMin: 0,
+              potentialMax: 0,
+              probability: patternProbabilities[pattern] ?? '-',
+            }
           )
         )
       );
     }
-    this.dataSource.data = dataSource;
+    this.patternDataSource = patternDataSource;
   }
 }

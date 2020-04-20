@@ -39,6 +39,7 @@
       <mat-form-field>
         <mat-label>{{ "Last Pattern" | translate }}</mat-label>
         <mat-select [formControl]="lastPatternControl">
+          <mat-option [value]="null">{{ 'None' | translate }}</mat-option>
           <mat-option
             *ngFor="let pattern of TurnipPatterns | keyvalue"
             [value]="pattern.key"
@@ -66,7 +67,7 @@
             {{ "Probability" | translate }}
           </th>
           <td mat-cell *matCellDef="let element">
-            {{ element.probability + "%" }}
+            {{ element.probability | percent:'1.0-2' }}
           </td>
         </ng-container>
 
@@ -119,16 +120,21 @@
 <div>
   <app-loading-spinner *ngIf="loading"></app-loading-spinner>
   <div *ngIf="!loading">
-    <div *ngIf="dataSource.data.length === 0 && initialized">
+    <div *ngIf="patternDataSource.length === 0 && initialized">
       {{ "No patterns found" | translate }}
     </div>
-    <div class="table-wrapper" *ngIf="dataSource.data.length">
-      <table mat-table [dataSource]="dataSource">
-        <ng-container matColumnDef="pattern" sticky>
+    <div class="table-wrapper" *ngIf="patternDataSource.length">
+      <table mat-table [dataSource]="patternDataSource">
+        <ng-container matColumnDef="pattern">
           <th mat-header-cell *matHeaderCellDef>{{ "Pattern" | translate }}</th>
           <td mat-cell *matCellDef="let element">
             {{ element.pattern | translate }}
           </td>
+        </ng-container>
+
+        <ng-container matColumnDef="probability">
+          <th mat-header-cell *matHeaderCellDef>%</th>
+          <td mat-cell *matCellDef="let element">{{ element.probability === '-' ? element.probability : (element.probability | percent:'1.0-2') }}</td>
         </ng-container>
 
         <ng-container matColumnDef="sun">
@@ -196,8 +202,18 @@
           <td mat-cell *matCellDef="let element">{{ element.satPm }}</td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        <ng-container matColumnDef="guaranteedMin">
+          <th mat-header-cell *matHeaderCellDef>{{ "Min" | translate }}</th>
+          <td mat-cell *matCellDef="let element">{{ element.guaranteedMin }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="potentialMax">
+          <th mat-header-cell *matHeaderCellDef>{{ "Max" | translate }}</th>
+          <td mat-cell *matCellDef="let element">{{ element.potentialMax }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="patternColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: patternColumns"></tr>
       </table>
     </div>
   </div>
