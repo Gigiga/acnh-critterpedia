@@ -108,6 +108,8 @@ public class BugHtmlExtractor implements BugExtractor {
                 return Bug.LocationEnum.ROCKS_RAINING;
             case "Hitting Rocks":
                 return Bug.LocationEnum.HITTING_ROCKS;
+            case "On Rocks and bushes (Rain)":
+                return Bug.LocationEnum.ROCKS_BUSHES_RAINING;
         }
         throw new RuntimeException("Invalid bug location: " + text);
     }

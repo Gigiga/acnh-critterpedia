@@ -36,7 +36,8 @@ export namespace Bug {
     | 'TRASH'
     | 'VILLAGERS_HATS'
     | 'ROCKS_RAINING'
-    | 'HITTING_ROCKS';
+    | 'HITTING_ROCKS'
+    | 'ROCKS_BUSHES_RAINING';
   export const LocationsEnum = {
     FLYING: 'FLYING' as LocationsEnum,
     FLYINGBYHYBRIDFLOWERS: 'FLYING_BY_HYBRID_FLOWERS' as LocationsEnum,
@@ -59,5 +60,6 @@ export namespace Bug {
     VILLAGERSHATS: 'VILLAGERS_HATS' as LocationsEnum,
     ROCKSRAINING: 'ROCKS_RAINING' as LocationsEnum,
     HITTINGROCKS: 'HITTING_ROCKS' as LocationsEnum,
+    ROCKSBUSHESRAINING: 'ROCKS_BUSHES_RAINING' as LocationsEnum,
   };
 }

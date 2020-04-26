@@ -92,7 +92,8 @@
     "TRASH": "Trash",
     "VILLAGERS_HATS": "On villager hats",
     "ROCKS_RAINING": "On rocks while it's raining",
-    "HITTING_ROCKS": "Hitting rocks"
+    "HITTING_ROCKS": "Hitting rocks",
+    "ROCKS_BUSHES_RAINING": "On rocks and bushes while it's raining"
   },
   "FISH_LOCATIONS": {
     "RIVER": "Rivers",

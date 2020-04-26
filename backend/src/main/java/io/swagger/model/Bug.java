@@ -69,7 +69,9 @@ public class Bug {
 
         ROCKS_RAINING("ROCKS_RAINING"),
 
-        HITTING_ROCKS("HITTING_ROCKS");
+        HITTING_ROCKS("HITTING_ROCKS"),
+
+        ROCKS_BUSHES_RAINING("ROCKS_BUSHES_RAINING");
 
         private String value;
 

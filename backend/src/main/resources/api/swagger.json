@@ -489,7 +489,8 @@
             "TRASH",
             "VILLAGERS_HATS",
             "ROCKS_RAINING",
-            "HITTING_ROCKS"
+            "HITTING_ROCKS",
+            "ROCKS_BUSHES_RAINING"
           ]
         },
         "catchTime": {
