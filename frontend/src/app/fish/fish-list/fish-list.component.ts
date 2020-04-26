@@ -7,6 +7,8 @@ import { seasonFilter } from 'src/app/shared/filters/season.filter';
 import { Fish } from 'src/app/shared/model/fish';
 import { ConfigurationService } from 'src/app/shared/service/configuration.service';
 import { timeFilter } from 'src/app/shared/filters/time.filter';
+import { Months } from 'src/app/shared/model/months';
+import { monthFilter } from 'src/app/shared/filters/month.filter';
 
 @Component({
   selector: 'app-fish-list',
@@ -17,10 +19,12 @@ export class FishListComponent implements OnInit, OnDestroy {
   private destroyed$ = new Subject();
   fish$ = new ReplaySubject<Fish[]>();
   locations = Object.values(Fish.LocationsEnum);
+  months = Object.values(Months);
 
   seasonOnlyControl = new FormControl(false);
   timeOnlyControl = new FormControl(false);
   locationControl = new FormControl([]);
+  monthsControl = new FormControl([]);
 
   constructor(
     private fishService: FishService,
@@ -39,13 +43,24 @@ export class FishListComponent implements OnInit, OnDestroy {
         startWith(this.timeOnlyControl.value)
       ),
       this.configurationService.southernHemisphere,
-      this.fishService.getAllFish()
+      this.fishService.getAllFish(),
+      this.monthsControl.valueChanges.pipe(startWith(this.monthsControl.value))
     )
       .pipe(takeUntil(this.destroyed$))
       .subscribe(
-        ([locations, seasonOnly, timeOnly, southernHemisphere, fish]) => {
+        ([
+          locations,
+          seasonOnly,
+          timeOnly,
+          southernHemisphere,
+          fish,
+          months,
+        ]) => {
           if (locations.length) {
             fish = fish.filter((fish) => locations.includes(fish.location));
+          }
+          if (months.length) {
+            fish = monthFilter(fish, southernHemisphere, months);
           }
           if (seasonOnly) {
             fish = seasonFilter(fish, southernHemisphere);

@@ -7,6 +7,14 @@
       }}</mat-option>
     </mat-select>
   </mat-form-field>
+  <mat-form-field>
+    <mat-label>{{ "Months" | translate }}</mat-label>
+    <mat-select [formControl]="monthsControl" multiple>
+      <mat-option *ngFor="let month of months" [value]="month">{{
+        "MONTHS." + month | translate
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
   <mat-checkbox [formControl]="seasonOnlyControl">{{
     "Current Season" | translate
   }}</mat-checkbox>
