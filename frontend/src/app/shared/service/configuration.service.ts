@@ -4,6 +4,7 @@ import { ConfigurationParameters } from './configuration-parameters.enum';
 import { TurnipCalculationRequest } from '../model/turnipCalculationRequest';
 import { skip } from 'rxjs/operators';
 import { TurnipPatterns } from '../model/turnip-patterns.enum';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -15,21 +16,8 @@ export class ConfigurationService {
   turnipRequest = new BehaviorSubject<TurnipCalculationRequest>(null);
   lastTurnipPattern = new BehaviorSubject<TurnipPatterns>(null);
 
-  constructor() {
-    this.southernHemisphere.next(
-      localStorage.getItem(ConfigurationParameters.SOUTHERN_HEMISPHERE) ===
-        'true'
-    );
-    this.collectedCollectibles.next(this.loadCollected());
-    this.donatedCollectibles.next(this.loadDonated());
-    this.turnipRequest.next(
-      JSON.parse(localStorage.getItem(ConfigurationParameters.TURNIP_REQUEST))
-    );
-    this.lastTurnipPattern.next(
-      JSON.parse(localStorage.getItem(
-        ConfigurationParameters.LAST_TURNIP_PATTERN
-      ))
-    );
+  constructor(private router: Router) {
+    this.loadFromStorage();
 
     this.southernHemisphere.subscribe((southernHemisphere) =>
       localStorage.setItem(
@@ -71,6 +59,23 @@ export class ConfigurationService {
       );
   }
 
+  private loadFromStorage() {
+    this.southernHemisphere.next(
+      localStorage.getItem(ConfigurationParameters.SOUTHERN_HEMISPHERE) ===
+        'true'
+    );
+    this.collectedCollectibles.next(this.loadCollected());
+    this.donatedCollectibles.next(this.loadDonated());
+    this.turnipRequest.next(
+      JSON.parse(localStorage.getItem(ConfigurationParameters.TURNIP_REQUEST))
+    );
+    this.lastTurnipPattern.next(
+      JSON.parse(localStorage.getItem(
+        ConfigurationParameters.LAST_TURNIP_PATTERN
+      ))
+    );
+  }
+
   private loadCollected(): string[] {
     return (
       JSON.parse(
@@ -109,5 +114,21 @@ export class ConfigurationService {
   removeDonated(name: string) {
     const donated = this.loadDonated();
     this.donatedCollectibles.next(donated.filter((n) => n !== name));
+  }
+
+  createPermaLink(): string {
+    const obj = {};
+    for (const configParam of Object.values(ConfigurationParameters)) {
+      obj[configParam] = localStorage.getItem(configParam);
+    }
+    return `${location.origin}/#${this.router.createUrlTree(['/perma', btoa(JSON.stringify(obj))])}`;
+  }
+
+  restoreFromLink(link: string) {
+    const obj = JSON.parse(atob(link));
+    for(const configParam in obj) {
+      localStorage.setItem(configParam, obj[configParam]);
+    }
+    this.loadFromStorage();
   }
 }

@@ -23,6 +23,8 @@ import { SharedModule } from './shared/shared.module';
 import { RouteReuseStrategy } from '@angular/router';
 import { AppRoutingReuseStrategy } from './app-routing-reuse-strategy';
 import { TurnipModule } from './turnip/turnip.module';
+import { PermaComponent } from './perma/perma.component';
+import { PermaMessageComponent } from './perma-message/perma-message.component';
 
 export function getProviders() {
   if(environment.useMocks) {
@@ -46,7 +48,7 @@ export function getProviders() {
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, PermaComponent, PermaMessageComponent],
   imports: [
     BrowserModule,
     SharedModule,

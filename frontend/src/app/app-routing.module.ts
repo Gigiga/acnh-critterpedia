@@ -7,6 +7,7 @@ import { FishDetailsComponent } from './fish/fish-details/fish-details.component
 import { BugDetailsComponent } from './bug/bug-details/bug-details.component';
 import { FossilDetailsComponent } from './fossil/fossil-details/fossil-details.component';
 import { TurnipPredictionComponent } from './turnip/turnip-prediction/turnip-prediction.component';
+import { PermaComponent } from './perma/perma.component';
 
 const routes: Routes = [
   {
@@ -48,6 +49,10 @@ const routes: Routes = [
     data: {
       shouldReuse: true,
     },
+  },
+  {
+    path: 'perma/:link',
+    component: PermaComponent,
   },
   {
     path: '',
