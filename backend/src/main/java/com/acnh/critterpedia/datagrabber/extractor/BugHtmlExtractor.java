@@ -64,51 +64,51 @@ public class BugHtmlExtractor implements BugExtractor {
     }
 
     private Bug.LocationEnum translateLocation(String text) {
-        switch (text) {
-            case "Flying":
+        switch (text.toLowerCase()) {
+            case "flying":
                 return Bug.LocationEnum.FLYING;
-            case "Flying by Hybrid Flowers":
+            case "flying by hybrid flowers":
                 return Bug.LocationEnum.FLYING_BY_HYBRID_FLOWERS;
-            case "Flying by Light":
+            case "flying by light":
                 return Bug.LocationEnum.FLYING_BY_LIGHT;
-            case "On Trees":
+            case "on trees":
                 return Bug.LocationEnum.TREES;
-            case "On the Ground":
+            case "on the ground":
                 return Bug.LocationEnum.GROUND;
-            case "On Flowers":
+            case "on flowers":
                 return Bug.LocationEnum.FLOWERS;
-            case "On Flowers (White)":
+            case "on flowers (white)":
                 return Bug.LocationEnum.WHITE_FLOWERS;
-            case "Shaking Trees":
+            case "shaking trees":
                 return Bug.LocationEnum.SHAKING_TREES;
-            case "Underground":
+            case "underground":
                 return Bug.LocationEnum.UNDERGROUND;
-            case "On Ponds and Rivers":
+            case "on ponds and rivers":
                 return Bug.LocationEnum.POND_AND_RIVERS;
-            case "On Tree Stumps":
+            case "on tree stumps":
                 return Bug.LocationEnum.TREESTUMPS;
-            case "On Trees (Coconut?)":
-            case "On Trees (Coconut)":
+            case "on trees (coconut?)":
+            case "on trees (coconut)":
                 return Bug.LocationEnum.COCONUT_TREES;
-            case "On the Ground (rolling snowballs)":
+            case "on the ground (rolling snowballs)":
                 return Bug.LocationEnum.GROUND_ROLLING_SNOWBALLS;
-            case "Under Trees Disguised as Leafs":
+            case "under trees disguised as leafs":
                 return Bug.LocationEnum.UNDER_TREES_DISGUISED_LEAFS;
-            case "On rotten food":
+            case "on rotten food":
                 return Bug.LocationEnum.ROTTEN_FRUIT;
-            case "Beach disguised as Shells":
+            case "beach disguised as shells":
                 return Bug.LocationEnum.BEACH;
-            case "On Beach Rocks":
+            case "on beach rocks":
                 return Bug.LocationEnum.BEACH_ROCKS;
-            case "On Trash Items":
+            case "on trash items":
                 return Bug.LocationEnum.TRASH;
-            case "Villager's Heads":
+            case "villager's heads":
                 return Bug.LocationEnum.VILLAGERS_HATS;
-            case "On Rocks (Rain)":
+            case "on rocks (rain)":
                 return Bug.LocationEnum.ROCKS_RAINING;
-            case "Hitting Rocks":
+            case "hitting rocks":
                 return Bug.LocationEnum.HITTING_ROCKS;
-            case "On Rocks and bushes (Rain)":
+            case "on rocks and bushes (rain)":
                 return Bug.LocationEnum.ROCKS_BUSHES_RAINING;
         }
         throw new RuntimeException("Invalid bug location: " + text);

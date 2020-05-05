@@ -66,21 +66,22 @@ public class FishHtmlExtractor implements FishExtractor {
     }
 
     private Fish.LocationEnum translateLocation(String text) {
-        switch (text) {
-            case "River":
+        switch (text.toLowerCase()) {
+            case "river":
                 return Fish.LocationEnum.RIVER;
-            case "Pond":
+            case "pond":
                 return Fish.LocationEnum.POND;
-            case "River (Clifftop)":
-            case "River (Clifftop) Pond":
+            case "river (clifftop)":
+            case "river (clifftop) pond":
                 return Fish.LocationEnum.RIVER_CLIFFTOP;
-            case "River (Mouth)":
+            case "river (mouth)":
                 return Fish.LocationEnum.RIVER_MOUTH;
-            case "Sea":
+            case "sea":
                 return Fish.LocationEnum.SEA;
-            case "Pier":
+            case "pier":
                 return Fish.LocationEnum.PIER;
-            case "Sea (while raining)":
+            case "sea (while raining)":
+            case "sea (raining)":
                 return Fish.LocationEnum.SEA_RAINING;
         }
         throw new RuntimeException("Invalid location " + text);
